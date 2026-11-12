@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Lanay menu status</title>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Great+Vibes&display=swap"
+        />
+        <link rel="stylesheet" href="../assets/staff.css" />
+    </head>
+    <body>
+        <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+            <defs>
+                <symbol id="nigiri" viewBox="0 0 64 64">
+                    <rect x="10" y="30" width="44" height="18" rx="9" fill="#fff" />
+                    <path d="M8 32c4-14 44-14 48 0z" fill="#F4A58A" />
+                    <path
+                        d="M20 26l4 4M32 24l4 4M44 26l4 4"
+                        stroke="#fff"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+                </symbol>
+                <symbol id="maki" viewBox="0 0 64 64">
+                    <circle cx="32" cy="32" r="22" fill="#1B1D1F" />
+                    <circle cx="32" cy="32" r="16" fill="#fff" />
+                    <circle cx="32" cy="32" r="7" fill="#F4A58A" />
+                </symbol>
+                <symbol id="bowl" viewBox="0 0 64 64">
+                    <path d="M8 30h48c0 16-10 24-24 24S8 46 8 30z" fill="#fff" />
+                    <path d="M16 30c0-9 8-14 16-14s16 5 16 14z" fill="#F4B49C" />
+                </symbol>
+                <symbol id="gyoza" viewBox="0 0 64 64">
+                    <path d="M8 42c0-16 14-22 24-22s24 6 24 22z" fill="#fff" />
+                    <path
+                        d="M16 40l2-9M26 40l1-11M36 40l-1-11M46 40l-2-9"
+                        stroke="#F4B49C"
+                        stroke-width="3"
+                        stroke-linecap="round"
+                    />
+                </symbol>
+                <symbol id="tempura" viewBox="0 0 64 64">
+                    <rect
+                        x="8"
+                        y="22"
+                        width="48"
+                        height="13"
+                        rx="6.5"
+                        transform="rotate(-20 32 32)"
+                        fill="#F4B49C"
+                    />
+                    <rect
+                        x="12"
+                        y="34"
+                        width="44"
+                        height="13"
+                        rx="6.5"
+                        transform="rotate(-20 32 32)"
+                        fill="#F8E7A6"
+                    />
+                </symbol>
+                <symbol id="cup" viewBox="0 0 64 64">
+                    <path d="M16 18h32l-4 34H20z" fill="#fff" />
+                    <path d="M18 28h28l-1 8H19z" fill="#CFE3D3" />
+                    <path d="M34 6l4 12" stroke="#1B1D1F" stroke-width="3" stroke-linecap="round" />
+                </symbol>
+            </defs>
+        </svg>
+        <div class="pg" style="min-height: 1000px">
+            <div class="bgart" aria-hidden="true">
+                <span class="b2"></span><span class="b3"></span><span class="ring"></span
+                ><span class="wave"></span
+                ><img class="wm" src="../../assets/images/logo.png" alt="" aria-hidden="true" />
+            </div>
+            <div class="wr">
+                <div class="bar">
+                    <a
+                        class="btn sec"
+                        href="../waiter/tables.html"
+                        style="min-height: 52px; font-size: 16px"
+                        >Back to tables</a
+                    >
+                    <h1 class="h1">Menu status</h1>
+                    <span class="chip" style="background: #fff; margin-left: auto">Kitchen</span>
+                </div>
+                <p style="margin: 0 0 20px; font-size: 17px; color: #5b5f63">
+                    Switch an item off and waiters can no longer order it.
+                </p>
+                <div
+                    style="
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                        gap: 16px;
+                    "
+                >
+                    <div
+                        class="card"
+                        style="padding: 16px; display: flex; flex-direction: column; gap: 12px"
+                    >
+                        <div class="art" style="background: #fbdccf">
+                            <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true">
+                                <use href="#nigiri" />
+                            </svg>
+                        </div>
+                        <div class="r" style="justify-content: space-between">
+                            <b style="font-size: 19px; font-weight: 600">Salmon nigiri</b
+                            ><span class="chip" style="background: #d7e8da; color: #2d5a3a"
+                                >Available</span
+                            >
+                        </div>
+                        <div class="r" style="justify-content: space-between">
+                            <span style="color: #5b5f63; font-size: 15px">12 portions left</span
+                            ><label class="r" style="gap: 10px"
+                                ><input
+                                    class="sw"
+                                    type="checkbox"
+                                    checked
+                                    aria-label="Salmon nigiri available"
+                            /></label>
+                        </div>
+                    </div>
+                    <div
+                        class="card"
+                        style="padding: 16px; display: flex; flex-direction: column; gap: 12px"
+                    >
+                        <div class="art" style="background: #cfe3d3">
+                            <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true">
+                                <use href="#maki" />
+                            </svg>
+                        </div>
+                        <div class="r" style="justify-content: space-between">
+                            <b style="font-size: 19px; font-weight: 600">California maki</b
+                            ><span class="chip" style="background: #d7e8da; color: #2d5a3a"
+                                >Available</span
+                            >
+                        </div>
+                        <div class="r" style="justify-content: space-between">
+                            <span style="color: #5b5f63; font-size: 15px">No limit</span
+                            ><label class="r" style="gap: 10px"
+                                ><input
+                                    class="sw"
+                                    type="checkbox"
+                                    checked
+                                    aria-label="California maki available"
+                            /></label>
+                        </div>
+                    </div>
+                    <div
+                        class="card"
+                        style="padding: 16px; display: flex; flex-direction: column; gap: 12px"
+                    >
+                        <div class="art" style="background: #fbefc0">
+                            <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true">
+                                <use href="#bowl" />
+                            </svg>
+                        </div>
+                        <div class="r" style="justify-content: space-between">
+                            <b style="font-size: 19px; font-weight: 600">Chicken katsu curry</b
+                            ><span class="chip" style="background: #d7e8da; color: #2d5a3a"
+                                >Available</span
+                            >
+                        </div>
+                        <div class="r" style="justify-content: space-between">
+                            <span style="color: #5b5f63; font-size: 15px">No limit</span
+                            ><label class="r" style="gap: 10px"
+                                ><input
+                                    class="sw"
+                                    type="checkbox"
+                                    checked
+                                    aria-label="Chicken katsu curry available"
+                            /></label>
+                        </div>
+                    </div>
+                    <div
+                        class="card"
+                        style="padding: 16px; display: flex; flex-direction: column; gap: 12px"
+                    >
+                        <div class="art" style="background: #e8e5de">
+                            <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true">
+                                <use href="#gyoza" />
+                            </svg>
+                        </div>
+                        <div class="r" style="justify-content: space-between">
+                            <b style="font-size: 19px; font-weight: 600">Gyoza</b
+                            ><span class="chip" style="background: #d7e8da; color: #2d5a3a"
+                                >Available</span
+                            >
+                        </div>
+                        <div class="r" style="justify-content: space-between">
+                            <span style="color: #5b5f63; font-size: 15px">3 left, getting low</span
+                            ><label class="r" style="gap: 10px"
+                                ><input
+                                    class="sw"
+                                    type="checkbox"
+                                    checked
+                                    aria-label="Gyoza available"
+                            /></label>
+                        </div>
+                    </div>
+                    <div
+                        class="card"
+                        style="padding: 16px; display: flex; flex-direction: column; gap: 12px"
+                    >
+                        <div class="art" style="background: #ffe9b8">
+                            <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true">
+                                <use href="#maki" />
+                            </svg>
+                        </div>
+                        <div class="r" style="justify-content: space-between">
+                            <b style="font-size: 19px; font-weight: 600">Dragon roll</b
+                            ><span class="chip" style="background: #d7e8da; color: #2d5a3a"
+                                >Available</span
+                            >
+                        </div>
+                        <div class="r" style="justify-content: space-between">
+                            <span style="color: #5b5f63; font-size: 15px">No limit</span
+                            ><label class="r" style="gap: 10px"
+                                ><input
+                                    class="sw"
+                                    type="checkbox"
+                                    checked
+                                    aria-label="Dragon roll available"
+                            /></label>
+                        </div>
+                    </div>
+                    <div
+                        class="card"
+                        style="padding: 16px; display: flex; flex-direction: column; gap: 12px"
+                    >
+                        <div class="art" style="background: #fbdccf">
+                            <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true">
+                                <use href="#tempura" />
+                            </svg>
+                        </div>
+                        <div class="r" style="justify-content: space-between">
+                            <b style="font-size: 19px; font-weight: 600">Ebi tempura</b
+                            ><span class="chip" style="background: #d7e8da; color: #2d5a3a"
+                                >Available</span
+                            >
+                        </div>
+                        <div class="r" style="justify-content: space-between">
+                            <span style="color: #5b5f63; font-size: 15px">8 portions left</span
+                            ><label class="r" style="gap: 10px"
+                                ><input
+                                    class="sw"
+                                    type="checkbox"
+                                    checked
+                                    aria-label="Ebi tempura available"
+                            /></label>
+                        </div>
+                    </div>
+                    <div
+                        class="card"
+                        style="padding: 16px; display: flex; flex-direction: column; gap: 12px"
+                    >
+                        <div class="art" style="background: #e6e4de">
+                            <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true">
+                                <use href="#bowl" />
+                            </svg>
+                        </div>
+                        <div class="r" style="justify-content: space-between">
+                            <b style="font-size: 19px; font-weight: 600">Tonkotsu ramen</b
+                            ><span class="chip" style="background: #fbdccf; color: #7a2a10"
+                                >Sold out</span
+                            >
+                        </div>
+                        <div class="r" style="justify-content: space-between">
+                            <span style="color: #5b5f63; font-size: 15px">0 left</span
+                            ><label class="r" style="gap: 10px"
+                                ><input
+                                    class="sw"
+                                    type="checkbox"
+                                    aria-label="Tonkotsu ramen available"
+                            /></label>
+                        </div>
+                    </div>
+                    <div
+                        class="card"
+                        style="padding: 16px; display: flex; flex-direction: column; gap: 12px"
+                    >
+                        <div class="art" style="background: #e6e4de">
+                            <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true">
+                                <use href="#nigiri" />
+                            </svg>
+                        </div>
+                        <div class="r" style="justify-content: space-between">
+                            <b style="font-size: 19px; font-weight: 600">Uni nigiri</b
+                            ><span class="chip" style="background: #fbdccf; color: #7a2a10"
+                                >Sold out</span
+                            >
+                        </div>
+                        <div class="r" style="justify-content: space-between">
+                            <span style="color: #5b5f63; font-size: 15px">0 left</span
+                            ><label class="r" style="gap: 10px"
+                                ><input
+                                    class="sw"
+                                    type="checkbox"
+                                    aria-label="Uni nigiri available"
+                            /></label>
+                        </div>
+                    </div>
+                </div>
+                <nav class="tabs">
+                    <a class="tab" href="../waiter/tables.html"
+                        ><svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <circle cx="12" cy="12" r="6" />
+                            <path d="M12 2v2M12 20v2M2 12h2M20 12h2" /></svg
+                        >Tables </a
+                    ><a class="tab" href="../waiter/ready-to-serve.html"
+                        ><svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <path d="M5 13l4 4L19 7" /></svg
+                        >Ready to serve
+                        <span class="chip" style="background: #f8e7a6; color: #5a4300">2</span></a
+                    ><a class="tab on" href="../kitchen/menu-status.html"
+                        ><svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <path d="M4 6h16M4 12h16M4 18h10" /></svg
+                        >Menu status </a
+                    ><a class="tab" href="../owner/delivery.html"
+                        ><svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <circle cx="6" cy="17" r="3" />
+                            <circle cx="18" cy="17" r="3" />
+                            <path d="M9 17h6l-3-8H9M15 9h3l1 5" /></svg
+                        >Delivery
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Lanay waste log</title>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Great+Vibes&display=swap"
+        />
+        <link rel="stylesheet" href="../assets/staff.css" />
+    </head>
+    <body>
+        <div class="pg" style="min-height: 860px">
+            <div class="bgart" aria-hidden="true">
+                <span class="b2"></span><span class="b3"></span><span class="ring"></span
+                ><span class="wave"></span
+                ><img class="wm" src="../../assets/images/logo.png" alt="" aria-hidden="true" />
+            </div>
+            <div class="wr">
+                <div class="bar">
+                    <img
+                        class="lg"
+                        src="../../assets/images/logo.png"
+                        alt="Lanay Restaurant"
+                        style="width: 56px; height: 56px"
+                    />
+                    <h1 class="h1">Waste log</h1>
+                    <span class="chip" style="background: #fff; margin-left: auto">Kitchen</span
+                    ><b>6:42 PM</b>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+                    <div class="card" style="flex: 1 1 600px; padding: 18px">
+                        <p class="h2">Recent entries</p>
+                        <table class="tbl">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Item</th>
+                                    <th>Amount</th>
+                                    <th>Reason</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>6:10 PM</td>
+                                    <td>Salmon</td>
+                                    <td>150 g</td>
+                                    <td>
+                                        <span
+                                            class="chip"
+                                            style="background: #fbdccf; color: #7a2a10"
+                                            >Expired</span
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>5:45 PM</td>
+                                    <td>Chicken katsu curry</td>
+                                    <td>1 portion</td>
+                                    <td>
+                                        <span
+                                            class="chip"
+                                            style="background: #f8e7a6; color: #5a4300"
+                                            >Wrong order</span
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>4:30 PM</td>
+                                    <td>Sushi rice</td>
+                                    <td>300 g</td>
+                                    <td>
+                                        <span
+                                            class="chip"
+                                            style="background: #eceae4; color: #1b1d1f"
+                                            >Spilled</span
+                                        >
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="margin: 14px 12px 0; font-size: 13px; color: #5b5f63">
+                            Sample data.
+                        </p>
+                    </div>
+                    <aside class="card" style="flex: 0 1 380px; min-width: 300px">
+                        <p class="h2">Log waste</p>
+                        <label class="lbl" for="w1">Item or ingredient</label
+                        ><input id="w1" class="inp" value="Salmon" /><label class="lbl" for="w2"
+                            >Amount</label
+                        ><input id="w2" class="inp" value="150 g" /><b class="lbl">Reason</b>
+                        <div class="r" style="flex-wrap: wrap; gap: 8px">
+                            <button
+                                class="qn"
+                                style="background: #1b1d1f; color: #fff; border-color: #1b1d1f"
+                            >
+                                Expired</button
+                            ><button class="qn" style="">Spilled</button
+                            ><button class="qn" style="">Wrong order</button
+                            ><button class="qn" style="">Overcooked</button>
+                        </div>
+                        <div style="margin-top: 18px">
+                            <button
+                                class="btn pri"
+                                style="
+                                    min-height: 48px;
+                                    font-size: 15px;
+                                    padding: 0 18px;
+                                    width: 100%;
+                                    min-height: 58px;
+                                "
+                            >
+                                Save
+                            </button>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

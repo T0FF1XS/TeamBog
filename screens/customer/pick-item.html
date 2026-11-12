@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Lanay item sheet</title>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Great+Vibes&display=swap"
+        />
+        <link rel="stylesheet" href="../assets/customer.css" />
+    </head>
+    <body>
+        <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+            <defs>
+                <symbol id="nigiri" viewBox="0 0 64 64">
+                    <rect x="10" y="30" width="44" height="18" rx="9" fill="#fff" />
+                    <path d="M8 32c4-14 44-14 48 0z" fill="#F4A58A" />
+                    <path
+                        d="M20 26l4 4M32 24l4 4M44 26l4 4"
+                        stroke="#fff"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+                </symbol>
+                <symbol id="maki" viewBox="0 0 64 64">
+                    <circle cx="32" cy="32" r="22" fill="#2B3F40" />
+                    <circle cx="32" cy="32" r="16" fill="#fff" />
+                    <circle cx="32" cy="32" r="7" fill="#F4A58A" />
+                </symbol>
+                <symbol id="bowl" viewBox="0 0 64 64">
+                    <path d="M8 30h48c0 16-10 24-24 24S8 46 8 30z" fill="#fff" />
+                    <path d="M16 30c0-9 8-14 16-14s16 5 16 14z" fill="#F8C98A" />
+                </symbol>
+            </defs>
+        </svg>
+        <div class="ph">
+            <div class="r" style="margin-bottom: 14px">
+                <img class="lg" src="../../assets/images/logo.png" alt="Lanay Restaurant" /><span
+                    class="chip"
+                    style="background: #fff"
+                    >Table 6</span
+                >
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 12px">
+                <div style="height: 90px; border-radius: 22px; background: #fff"></div>
+                <div style="height: 90px; border-radius: 22px; background: #fff"></div>
+            </div>
+            <div style="position: absolute; inset: 0; background: rgba(27, 29, 31, 0.5)"></div>
+            <div
+                style="
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: #fff;
+                    border-radius: 34px 34px 0 0;
+                    padding: 14px 22px 24px;
+                    box-shadow: 0 -14px 40px rgba(27, 29, 31, 0.2);
+                "
+            >
+                <div
+                    style="
+                        width: 48px;
+                        height: 5px;
+                        border-radius: 9px;
+                        background: #dad8d1;
+                        margin: 0 auto 16px;
+                    "
+                ></div>
+                <div class="art" style="width: 100%; height: 150px; background: #fbdccf">
+                    <svg width="104" height="104" viewBox="0 0 64 64" aria-hidden="true">
+                        <use href="#nigiri" />
+                    </svg>
+                </div>
+                <div class="r" style="justify-content: space-between; margin: 16px 0 4px">
+                    <b style="font-size: 24px; font-weight: 600">Salmon nigiri</b
+                    ><b style="font-size: 22px">₱120</b>
+                </div>
+                <p style="margin: 0 0 14px; color: #5b5f63; font-size: 15px">2 pieces per order.</p>
+                <b style="font-size: 15px">Make it yours</b>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 16px">
+                    <button
+                        class="qn"
+                        style="background: #f8e7a6; border-color: #f8e7a6; font-weight: 600"
+                    >
+                        No wasabi</button
+                    ><button class="qn" style="">Less spicy</button
+                    ><button class="qn" style="">Extra sauce</button
+                    ><button class="qn" style="">Allergy</button>
+                </div>
+                <div class="r" style="justify-content: space-between; margin-bottom: 16px">
+                    <b style="font-size: 16px">Quantity</b>
+                    <div class="r" style="gap: 16px">
+                        <button class="sb" aria-label="Remove one">−</button
+                        ><b style="font-size: 22px">2</b
+                        ><button class="sb" aria-label="Add one">+</button>
+                    </div>
+                </div>
+                <button class="btn pri">Add to order, ₱240.00</button>
+            </div>
+        </div>
+    </body>
+</html>

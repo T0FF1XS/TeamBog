@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Lanay customer menu</title>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Great+Vibes&display=swap"
+        />
+        <link rel="stylesheet" href="../assets/customer.css" />
+    </head>
+    <body>
+        <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+            <defs>
+                <symbol id="nigiri" viewBox="0 0 64 64">
+                    <rect x="10" y="30" width="44" height="18" rx="9" fill="#fff" />
+                    <path d="M8 32c4-14 44-14 48 0z" fill="#F4A58A" />
+                    <path
+                        d="M20 26l4 4M32 24l4 4M44 26l4 4"
+                        stroke="#fff"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+                </symbol>
+                <symbol id="maki" viewBox="0 0 64 64">
+                    <circle cx="32" cy="32" r="22" fill="#2B3F40" />
+                    <circle cx="32" cy="32" r="16" fill="#fff" />
+                    <circle cx="32" cy="32" r="7" fill="#F4A58A" />
+                </symbol>
+                <symbol id="bowl" viewBox="0 0 64 64">
+                    <path d="M8 30h48c0 16-10 24-24 24S8 46 8 30z" fill="#fff" />
+                    <path d="M16 30c0-9 8-14 16-14s16 5 16 14z" fill="#F8C98A" />
+                </symbol>
+            </defs>
+        </svg>
+        <div class="ph">
+            <div class="r" style="margin-bottom: 10px">
+                <img class="lg" src="../../assets/images/logo.png" alt="Lanay Restaurant" /><span
+                    class="chip"
+                    style="background: #fff"
+                    >Table 6</span
+                ><button
+                    class="cat"
+                    style="margin-left: auto; display: flex; align-items: center; gap: 8px"
+                >
+                    <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z" />
+                        <path d="M10 21h4" /></svg
+                    >Call waiter
+                </button>
+            </div>
+            <p class="script" style="font-size: 46px; margin: 6px 0 2px">Welcome</p>
+            <p style="margin: 0 0 14px; color: #5b5f63; font-size: 15px">
+                Tap + to add to your order.
+            </p>
+            <label for="s" style="position: absolute; left: -9999px">Search the menu</label
+            ><input
+                id="s"
+                placeholder="Search the menu"
+                style="
+                    width: 100%;
+                    min-height: 50px;
+                    border: 2px solid #dad8d1;
+                    border-radius: 16px;
+                    padding: 0 16px;
+                    font-family: inherit;
+                    font-size: 16px;
+                    background: #fff;
+                    margin-bottom: 12px;
+                "
+            />
+            <div style="display: flex; gap: 8px; overflow: hidden; margin-bottom: 14px">
+                <button class="cat on">All</button><button class="cat">Sushi</button
+                ><button class="cat">Japanese</button><button class="cat">Korean</button
+                ><button class="cat">Italian</button><button class="cat">Filipino</button
+                ><button class="cat">Drinks</button>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 12px">
+                <div class="row">
+                    <span
+                        style="
+                            position: absolute;
+                            left: 8px;
+                            top: 8px;
+                            min-width: 26px;
+                            height: 26px;
+                            border-radius: 99px;
+                            background: #1b1d1f;
+                            color: #fff;
+                            font-size: 13px;
+                            font-weight: 700;
+                            display: grid;
+                            place-items: center;
+                        "
+                        >2</span
+                    >
+                    <div class="art" style="width: 84px; height: 84px; background: #fbdccf">
+                        <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true">
+                            <use href="#nigiri" />
+                        </svg>
+                    </div>
+                    <div style="flex: 1">
+                        <b style="font-weight: 600; font-size: 16px; display: block"
+                            >Salmon nigiri</b
+                        ><span style="font-size: 15px; color: #5b5f63">₱120</span>
+                    </div>
+                    <button class="add" aria-label="Add Salmon nigiri">+</button>
+                </div>
+                <div class="row">
+                    <span
+                        style="
+                            position: absolute;
+                            left: 8px;
+                            top: 8px;
+                            min-width: 26px;
+                            height: 26px;
+                            border-radius: 99px;
+                            background: #1b1d1f;
+                            color: #fff;
+                            font-size: 13px;
+                            font-weight: 700;
+                            display: grid;
+                            place-items: center;
+                        "
+                        >1</span
+                    >
+                    <div class="art" style="width: 84px; height: 84px; background: #cfe3d3">
+                        <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true">
+                            <use href="#maki" />
+                        </svg>
+                    </div>
+                    <div style="flex: 1">
+                        <b style="font-weight: 600; font-size: 16px; display: block"
+                            >California maki</b
+                        ><span style="font-size: 15px; color: #5b5f63">₱180</span>
+                    </div>
+                    <button class="add" aria-label="Add California maki">+</button>
+                </div>
+                <div class="row">
+                    <span
+                        style="
+                            position: absolute;
+                            left: 8px;
+                            top: 8px;
+                            min-width: 26px;
+                            height: 26px;
+                            border-radius: 99px;
+                            background: #1b1d1f;
+                            color: #fff;
+                            font-size: 13px;
+                            font-weight: 700;
+                            display: grid;
+                            place-items: center;
+                        "
+                        >1</span
+                    >
+                    <div class="art" style="width: 84px; height: 84px; background: #fbefc0">
+                        <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true">
+                            <use href="#bowl" />
+                        </svg>
+                    </div>
+                    <div style="flex: 1">
+                        <b style="font-weight: 600; font-size: 16px; display: block"
+                            >Chicken katsu curry</b
+                        ><span style="font-size: 15px; color: #5b5f63">₱210</span>
+                    </div>
+                    <button class="add" aria-label="Add Chicken katsu curry">+</button>
+                </div>
+                <div class="row" style="background: #eeece7; box-shadow: none">
+                    <div class="art" style="width: 84px; height: 84px; background: #e6e4de">
+                        <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true">
+                            <use href="#bowl" />
+                        </svg>
+                    </div>
+                    <div style="flex: 1">
+                        <b style="font-weight: 600; font-size: 16px">Tonkotsu ramen</b>
+                        <div>
+                            <span
+                                class="chip"
+                                style="
+                                    background: #fbdccf;
+                                    color: #7a2a10;
+                                    min-height: 28px;
+                                    font-size: 13px;
+                                    margin-top: 6px;
+                                "
+                                >Sold out</span
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bar">
+                <span class="r"
+                    ><span
+                        style="
+                            background: #f4b49c;
+                            color: #1b1d1f;
+                            border-radius: 99px;
+                            min-width: 30px;
+                            height: 30px;
+                            display: grid;
+                            place-items: center;
+                            font-size: 14px;
+                        "
+                        >4</span
+                    >View order</span
+                ><span>₱630.00</span>
+            </div>
+        </div>
+    </body>
+</html>

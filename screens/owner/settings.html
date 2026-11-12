@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Lanay settings</title>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Great+Vibes&display=swap"
+        />
+        <link rel="stylesheet" href="../assets/staff.css" />
+    </head>
+    <body>
+        <div class="pg" style="min-height: 860px">
+            <div class="bgart" aria-hidden="true">
+                <span class="b2"></span><span class="b3"></span><span class="ring"></span
+                ><span class="wave"></span
+                ><img class="wm" src="../../assets/images/logo.png" alt="" aria-hidden="true" />
+            </div>
+            <div class="wr">
+                <div class="bar">
+                    <img
+                        class="lg"
+                        src="../../assets/images/logo.png"
+                        alt="Lanay Restaurant"
+                        style="width: 56px; height: 56px"
+                    />
+                    <h1 class="h1">Settings</h1>
+                    <span class="chip" style="background: #fff; margin-left: auto">Owner</span
+                    ><b>6:42 PM</b>
+                </div>
+                <div
+                    style="
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+                        gap: 20px;
+                    "
+                >
+                    <div class="card">
+                        <p class="h2">Restaurant</p>
+                        <label class="lbl" for="s1">Name on receipts</label
+                        ><input id="s1" class="inp" value="Lanay Restaurant" /><label
+                            class="lbl"
+                            for="s2"
+                            >Line under the name</label
+                        ><input id="s2" class="inp" value="By: Little Sushi Bar" /><label
+                            class="lbl"
+                            for="s3"
+                            >Message at the bottom</label
+                        ><input id="s3" class="inp" value="Thank you for dining with us!" />
+                    </div>
+                    <div class="card">
+                        <p class="h2">System</p>
+                        <div class="ln" style="padding: 12px 0; border-top: 1px solid #eceae4">
+                            <div>
+                                <b style="font-size: 16px; font-weight: 600">Prices include VAT</b>
+                                <div style="font-size: 13px; color: #5b5f63">
+                                    Shown on the receipt
+                                </div>
+                            </div>
+                            <input
+                                class="sw"
+                                type="checkbox"
+                                checked
+                                aria-label="Prices include VAT"
+                            />
+                        </div>
+                        <div class="ln" style="padding: 12px 0; border-top: 1px solid #eceae4">
+                            <div>
+                                <b style="font-size: 16px; font-weight: 600"
+                                    >Sound when a new order arrives</b
+                                >
+                                <div style="font-size: 13px; color: #5b5f63">Kitchen screen</div>
+                            </div>
+                            <input
+                                class="sw"
+                                type="checkbox"
+                                checked
+                                aria-label="Sound when a new order arrives"
+                            />
+                        </div>
+                        <div class="ln" style="padding: 12px 0; border-top: 1px solid #eceae4">
+                            <div>
+                                <b style="font-size: 16px; font-weight: 600">Daily backup</b>
+                                <div style="font-size: 13px; color: #5b5f63">
+                                    Last backup: today, 3:00 AM
+                                </div>
+                            </div>
+                            <input class="sw" type="checkbox" checked aria-label="Daily backup" />
+                        </div>
+                        <div class="ln" style="padding: 12px 0; border-top: 1px solid #eceae4">
+                            <div>
+                                <b style="font-size: 16px; font-weight: 600"
+                                    >Allow customers to order from the QR</b
+                                >
+                                <div style="font-size: 13px; color: #5b5f63">
+                                    Waiter confirms first
+                                </div>
+                            </div>
+                            <input
+                                class="sw"
+                                type="checkbox"
+                                checked
+                                aria-label="Allow customers to order from the QR"
+                            />
+                        </div>
+                    </div>
+                    <div class="card">
+                        <p class="h2">Receipt printer</p>
+                        <div class="r" style="justify-content: space-between">
+                            <span style="font-size: 16px">Printer 1</span
+                            ><span class="chip" style="background: #cfe3d3; color: #2d5a3a"
+                                >Connected</span
+                            >
+                        </div>
+                        <div style="margin-top: 16px">
+                            <button
+                                class="btn sec"
+                                style="
+                                    min-height: 48px;
+                                    font-size: 15px;
+                                    padding: 0 18px;
+                                    width: 100%;
+                                    min-height: 54px;
+                                "
+                            >
+                                Print a test receipt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

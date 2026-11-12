@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Table 6 | Lanay</title>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Great+Vibes&display=swap"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        />
+        <link rel="stylesheet" href="../assets/style.css" />
+    </head>
+    <body>
+        <div class="bgart" aria-hidden="true">
+            <span class="ring"></span>
+            <img src="../assets/images/logo.png" alt="" />
+            <span class="wave"></span>
+        </div>
+
+        <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+            <defs>
+                <symbol id="nigiri" viewBox="0 0 64 64">
+                    <rect x="10" y="30" width="44" height="18" rx="9" fill="#fff" />
+                    <path d="M8 32c4-14 44-14 48 0z" fill="#F4A58A" />
+                    <path
+                        d="M20 26l4 4M32 24l4 4M44 26l4 4"
+                        stroke="#fff"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+                </symbol>
+                <symbol id="bowl" viewBox="0 0 64 64">
+                    <path d="M8 30h48c0 16-10 24-24 24S8 46 8 30z" fill="#fff" />
+                    <path d="M16 30c0-9 8-14 16-14s16 5 16 14z" fill="#F8C98A" />
+                </symbol>
+                <symbol id="plate" viewBox="0 0 64 64">
+                    <circle cx="32" cy="32" r="24" fill="#fff" />
+                    <circle cx="32" cy="32" r="14" fill="#F8E7A6" />
+                </symbol>
+                <symbol id="cup" viewBox="0 0 64 64">
+                    <path d="M16 18h32l-4 34H20z" fill="#fff" />
+                    <path d="M18 28h28l-1 8H19z" fill="#CFE3D3" />
+                    <path d="M34 6l4 12" stroke="#1B1D1F" stroke-width="3" stroke-linecap="round" />
+                </symbol>
+            </defs>
+        </svg>
+
+        <main class="container position-relative pt-4 pb-5 mb-5">
+            <header class="d-flex flex-wrap align-items-center gap-3 mb-4">
+                <img class="logo" src="../assets/images/logo.png" alt="Lanay Restaurant" />
+                <h1 class="page-title m-0">Table 6</h1>
+                <span
+                    class="badge rounded-pill bg-white text-dark fs-6 fw-semibold ms-auto px-3 py-2"
+                    >Waiter 1</span
+                >
+                <a class="btn btn-outline-dark btn-sm" href="login.html">Sign out</a>
+            </header>
+
+            <div class="row g-4">
+                <div class="col-lg-7 col-xl-8">
+                    <div class="d-flex flex-wrap gap-2 mb-3" id="cats">
+                        <button
+                            type="button"
+                            class="btn btn-sm cat active"
+                            onclick="showCategory(0, this)"
+                        >
+                            All
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-sm cat"
+                            onclick="showCategory(1, this)"
+                        >
+                            Sushi
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-sm cat"
+                            onclick="showCategory(2, this)"
+                        >
+                            Japanese
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-sm cat"
+                            onclick="showCategory(3, this)"
+                        >
+                            Korean
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-sm cat"
+                            onclick="showCategory(4, this)"
+                        >
+                            Italian
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-sm cat"
+                            onclick="showCategory(5, this)"
+                        >
+                            Filipino
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-sm cat"
+                            onclick="showCategory(6, this)"
+                        >
+                            Drinks
+                        </button>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-6 col-md-4 col-xl-3 menu-col" data-cat="1">
+                            <button
+                                type="button"
+                                class="item"
+                                id="item-2"
+                                data-name="California maki"
+                                data-price="180.00"
+                                onclick="addToCart(2)"
+                            >
+                                <span class="qty-badge" id="badge-2"></span>
+                                <div class="art" style="background: #fbdccf">
+                                    <svg
+                                        width="56"
+                                        height="56"
+                                        viewBox="0 0 64 64"
+                                        aria-hidden="true"
+                                    >
+                                        <use href="#nigiri" />
+                                    </svg>
+                                </div>
+                                <b>California maki</b>
+                                <span>₱180.00</span>
+                            </button>
+                        </div>
+                        <div class="col-6 col-md-4 col-xl-3 menu-col" data-cat="1">
+                            <button
+                                type="button"
+                                class="item"
+                                id="item-1"
+                                data-name="Salmon nigiri"
+                                data-price="120.00"
+                                onclick="addToCart(1)"
+                            >
+                                <span class="qty-badge" id="badge-1"></span>
+                                <div class="art" style="background: #fbdccf">
+                                    <svg
+                                        width="56"
+                                        height="56"
+                                        viewBox="0 0 64 64"
+                                        aria-hidden="true"
+                                    >
+                                        <use href="#nigiri" />
+                                    </svg>
+                                </div>
+                                <b>Salmon nigiri</b>
+                                <span>₱120.00</span>
+                            </button>
+                        </div>
+                        <div class="col-6 col-md-4 col-xl-3 menu-col" data-cat="2">
+                            <button
+                                type="button"
+                                class="item"
+                                id="item-3"
+                                data-name="Chicken katsu curry"
+                                data-price="210.00"
+                                onclick="addToCart(3)"
+                            >
+                                <span class="qty-badge" id="badge-3"></span>
+                                <div class="art" style="background: #fbefc0">
+                                    <svg
+                                        width="56"
+                                        height="56"
+                                        viewBox="0 0 64 64"
+                                        aria-hidden="true"
+                                    >
+                                        <use href="#bowl" />
+                                    </svg>
+                                </div>
+                                <b>Chicken katsu curry</b>
+                                <span>₱210.00</span>
+                            </button>
+                        </div>
+                        <div class="col-6 col-md-4 col-xl-3 menu-col" data-cat="2">
+                            <button
+                                type="button"
+                                class="item"
+                                id="item-4"
+                                data-name="Gyoza"
+                                data-price="95.00"
+                                onclick="addToCart(4)"
+                            >
+                                <span class="qty-badge" id="badge-4"></span>
+                                <div class="art" style="background: #fbefc0">
+                                    <svg
+                                        width="56"
+                                        height="56"
+                                        viewBox="0 0 64 64"
+                                        aria-hidden="true"
+                                    >
+                                        <use href="#bowl" />
+                                    </svg>
+                                </div>
+                                <b>Gyoza</b>
+                                <span>₱95.00</span>
+                            </button>
+                        </div>
+                        <div class="col-6 col-md-4 col-xl-3 menu-col" data-cat="2">
+                            <button
+                                type="button"
+                                class="item"
+                                id="item-5"
+                                data-name="Tonkotsu ramen"
+                                data-price="260.00"
+                                disabled
+                                onclick="addToCart(5)"
+                            >
+                                <span class="qty-badge" id="badge-5"></span>
+                                <div class="art" style="background: #fbefc0">
+                                    <svg
+                                        width="56"
+                                        height="56"
+                                        viewBox="0 0 64 64"
+                                        aria-hidden="true"
+                                    >
+                                        <use href="#bowl" />
+                                    </svg>
+                                </div>
+                                <b>Tonkotsu ramen</b>
+                                <span
+                                    class="badge rounded-pill badge-late align-self-start px-3 py-2"
+                                    >Sold out</span
+                                >
+                            </button>
+                        </div>
+                        <div class="col-6 col-md-4 col-xl-3 menu-col" data-cat="6">
+                            <button
+                                type="button"
+                                class="item"
+                                id="item-6"
+                                data-name="Iced matcha"
+                                data-price="85.00"
+                                onclick="addToCart(6)"
+                            >
+                                <span class="qty-badge" id="badge-6"></span>
+                                <div class="art" style="background: #cfe3d3">
+                                    <svg
+                                        width="56"
+                                        height="56"
+                                        viewBox="0 0 64 64"
+                                        aria-hidden="true"
+                                    >
+                                        <use href="#cup" />
+                                    </svg>
+                                </div>
+                                <b>Iced matcha</b>
+                                <span>₱85.00</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-xl-4">
+                    <div class="card p-3">
+                        <form method="get" action="tables.html" id="order-form">
+                            <input type="hidden" name="table_no" value="6" />
+                            <input type="hidden" name="cart" id="cart-input" />
+                            <input type="hidden" name="guests" id="guests-input" value="2" />
+
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <b class="fs-5">Guests</b>
+                                <span class="d-flex align-items-center gap-3">
+                                    <button
+                                        type="button"
+                                        class="btn round-btn"
+                                        onclick="changeGuests(-1)"
+                                        aria-label="Fewer guests"
+                                    >
+                                        −
+                                    </button>
+                                    <b class="fs-5" id="guests">2</b>
+                                    <button
+                                        type="button"
+                                        class="btn round-btn"
+                                        onclick="changeGuests(1)"
+                                        aria-label="More guests"
+                                    >
+                                        +
+                                    </button>
+                                </span>
+                            </div>
+
+                            <div id="lines" class="d-grid gap-3 mb-3"></div>
+
+                            <b class="d-block mb-2">Quick notes</b>
+                            <div class="d-flex flex-wrap gap-2 mb-2">
+                                <button
+                                    type="button"
+                                    class="btn btn-sm note"
+                                    onclick="
+                                        this.classList.toggle('active');
+                                        buildNote();
+                                    "
+                                >
+                                    No wasabi
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn btn-sm note"
+                                    onclick="
+                                        this.classList.toggle('active');
+                                        buildNote();
+                                    "
+                                >
+                                    Less spicy
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn btn-sm note"
+                                    onclick="
+                                        this.classList.toggle('active');
+                                        buildNote();
+                                    "
+                                >
+                                    Allergy
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn btn-sm note"
+                                    onclick="
+                                        this.classList.toggle('active');
+                                        buildNote();
+                                    "
+                                >
+                                    Rush
+                                </button>
+                            </div>
+                            <input
+                                class="form-control mb-3"
+                                id="note-extra"
+                                placeholder="Other note for the kitchen"
+                                oninput="buildNote()"
+                                aria-label="Note for the kitchen"
+                            />
+                            <input type="hidden" name="note" id="note" />
+
+                            <div
+                                class="d-flex justify-content-between align-items-center border-top border-2 pt-3 mb-3"
+                            >
+                                <b class="fs-4">Total</b>
+                                <b class="fs-4" id="total">₱0.00</b>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lg w-100 mb-2">
+                                Send to kitchen
+                            </button>
+                            <a class="btn btn-outline-dark w-100" href="tables.html"
+                                >Back to tables</a
+                            >
+                        </form>
+
+                        <form
+                            method="get"
+                            action="tables.html"
+                            class="mt-3"
+                            onsubmit="
+                                return confirm(
+                                    'Clear this table? Open orders will be marked as paid.',
+                                );
+                            "
+                        >
+                            <input type="hidden" name="table_no" value="6" />
+                            <button type="submit" class="btn btn-outline-dark btn-sm w-100">
+                                Clear this table
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                var cart = [];
+                var guests = 2;
+
+                function showCategory(id, button) {
+                    var buttons = document.querySelectorAll("#cats .cat");
+                    for (var i = 0; i < buttons.length; i++) {
+                        buttons[i].classList.remove("active");
+                    }
+                    button.classList.add("active");
+
+                    var cols = document.querySelectorAll(".menu-col");
+                    for (var j = 0; j < cols.length; j++) {
+                        cols[j].style.display = id == 0 || cols[j].dataset.cat == id ? "" : "none";
+                    }
+                }
+
+                function findInCart(id) {
+                    for (var i = 0; i < cart.length; i++) {
+                        if (cart[i].item_id == id) {
+                            return i;
+                        }
+                    }
+                    return -1;
+                }
+
+                function addToCart(id) {
+                    var index = findInCart(id);
+                    if (index >= 0) {
+                        cart[index].quantity++;
+                    } else {
+                        var data = document.getElementById("item-" + id).dataset;
+                        cart.push({
+                            item_id: id,
+                            name: data.name,
+                            price: parseFloat(data.price),
+                            quantity: 1,
+                        });
+                    }
+                    showCart();
+                }
+
+                function changeQty(id, amount) {
+                    var index = findInCart(id);
+                    cart[index].quantity += amount;
+                    if (cart[index].quantity < 1) {
+                        cart.splice(index, 1);
+                    }
+                    showCart();
+                }
+
+                function changeGuests(amount) {
+                    guests = Math.max(1, guests + amount);
+                    document.getElementById("guests").textContent = guests;
+                    document.getElementById("guests-input").value = guests;
+                }
+
+                function buildNote() {
+                    var parts = [];
+                    var chosen = document.querySelectorAll(".note.active");
+                    for (var i = 0; i < chosen.length; i++) {
+                        parts.push(chosen[i].textContent);
+                    }
+                    var extra = document.getElementById("note-extra").value.trim();
+                    if (extra) {
+                        parts.push(extra);
+                    }
+                    document.getElementById("note").value = parts.join(", ");
+                }
+
+                function money(amount) {
+                    return (
+                        "₱" +
+                        amount.toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        })
+                    );
+                }
+
+                function showCart() {
+                    var box = document.getElementById("lines");
+                    var total = 0;
+                    box.innerHTML = "";
+
+                    var badges = document.querySelectorAll(".qty-badge");
+                    for (var b = 0; b < badges.length; b++) {
+                        badges[b].textContent = "";
+                        badges[b].parentNode.classList.remove("picked");
+                    }
+
+                    if (!cart.length) {
+                        box.innerHTML = '<p class="text-secondary m-0">Tap an item to add it.</p>';
+                    }
+
+                    for (var i = 0; i < cart.length; i++) {
+                        var item = cart[i];
+                        total += item.price * item.quantity;
+
+                        var row = document.createElement("div");
+                        row.className = "d-flex justify-content-between align-items-center gap-2";
+
+                        var name = document.createElement("span");
+                        name.className = "flex-grow-1";
+                        name.textContent = item.name;
+
+                        var controls = document.createElement("span");
+                        controls.className = "d-flex align-items-center gap-2";
+                        controls.innerHTML =
+                            '<button type="button" class="btn round-btn" aria-label="Remove one" onclick="changeQty(' +
+                            item.item_id +
+                            ', -1)">−</button>' +
+                            "<b>" +
+                            item.quantity +
+                            "</b>" +
+                            '<button type="button" class="btn round-btn" aria-label="Add one" onclick="changeQty(' +
+                            item.item_id +
+                            ', 1)">+</button>';
+
+                        var price = document.createElement("b");
+                        price.className = "text-end price-col";
+                        price.textContent = money(item.price * item.quantity);
+
+                        row.appendChild(name);
+                        row.appendChild(controls);
+                        row.appendChild(price);
+                        box.appendChild(row);
+
+                        var badge = document.getElementById("badge-" + item.item_id);
+                        badge.textContent = item.quantity;
+                        badge.parentNode.classList.add("picked");
+                    }
+
+                    document.getElementById("total").textContent = money(total);
+                    document.getElementById("cart-input").value = JSON.stringify(cart);
+                }
+
+                showCart();
+            </script>
+        </main>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Lanay menu manager</title>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Great+Vibes&display=swap"
+        />
+        <link rel="stylesheet" href="../assets/staff.css" />
+    </head>
+    <body>
+        <div class="pg" style="min-height: 960px">
+            <div class="bgart" aria-hidden="true">
+                <span class="b2"></span><span class="b3"></span><span class="ring"></span
+                ><span class="wave"></span
+                ><img class="wm" src="../../assets/images/logo.png" alt="" aria-hidden="true" />
+            </div>
+            <div class="wr">
+                <div class="bar">
+                    <img
+                        class="lg"
+                        src="../../assets/images/logo.png"
+                        alt="Lanay Restaurant"
+                        style="width: 56px; height: 56px"
+                    />
+                    <h1 class="h1">Menu</h1>
+                    <span class="chip" style="background: #fff; margin-left: auto">Owner</span
+                    ><b>6:42 PM</b>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+                    <div class="card" style="flex: 1 1 600px; padding: 18px">
+                        <div class="r" style="justify-content: space-between; margin-bottom: 8px">
+                            <p class="h2" style="margin: 0">All items</p>
+                            <button
+                                class="btn pri"
+                                style="
+                                    min-height: 48px;
+                                    font-size: 15px;
+                                    padding: 0 18px;
+                                    min-height: 44px;
+                                "
+                            >
+                                Add item
+                            </button>
+                        </div>
+                        <table class="tbl">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Portions</th>
+                                    <th>Available</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>Salmon nigiri</b></td>
+                                    <td>Sushi</td>
+                                    <td>₱120</td>
+                                    <td>12 left</td>
+                                    <td>
+                                        <input
+                                            class="sw"
+                                            type="checkbox"
+                                            checked
+                                            aria-label="Salmon nigiri available"
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>California maki</b></td>
+                                    <td>Sushi</td>
+                                    <td>₱180</td>
+                                    <td>No limit</td>
+                                    <td>
+                                        <input
+                                            class="sw"
+                                            type="checkbox"
+                                            checked
+                                            aria-label="California maki available"
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Chicken katsu curry</b></td>
+                                    <td>Japanese</td>
+                                    <td>₱210</td>
+                                    <td>No limit</td>
+                                    <td>
+                                        <input
+                                            class="sw"
+                                            type="checkbox"
+                                            checked
+                                            aria-label="Chicken katsu curry available"
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Gyoza</b></td>
+                                    <td>Japanese</td>
+                                    <td>₱95</td>
+                                    <td>3 left</td>
+                                    <td>
+                                        <input
+                                            class="sw"
+                                            type="checkbox"
+                                            checked
+                                            aria-label="Gyoza available"
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Tonkotsu ramen</b></td>
+                                    <td>Japanese</td>
+                                    <td>₱260</td>
+                                    <td>0 left</td>
+                                    <td>
+                                        <input
+                                            class="sw"
+                                            type="checkbox"
+                                            aria-label="Tonkotsu ramen available"
+                                        />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="margin: 14px 12px 0; font-size: 13px; color: #5b5f63">
+                            Sample items. The real menu replaces these.
+                        </p>
+                    </div>
+                    <aside class="card" style="flex: 0 1 400px; min-width: 300px">
+                        <p class="h2" style="margin: 0">Edit item</p>
+                        <label class="lbl" for="mn">Name</label
+                        ><input id="mn" class="inp" value="Salmon nigiri" />
+                        <div class="r" style="gap: 12px">
+                            <div style="flex: 1">
+                                <label class="lbl" for="mc">Category</label>
+                                <div id="mc" class="ck">Sushi</div>
+                            </div>
+                            <div style="flex: 1">
+                                <label class="lbl" for="mp">Price (₱)</label
+                                ><input id="mp" class="inp" value="120" />
+                            </div>
+                        </div>
+                        <label class="lbl" for="mq">Portions per day (empty = no limit)</label
+                        ><input id="mq" class="inp" value="12" />
+                        <b class="lbl">Recipe, used for automatic stock</b>
+                        <div
+                            class="card"
+                            style="
+                                box-shadow: none;
+                                background: #f6f5f2;
+                                padding: 12px;
+                                display: flex;
+                                flex-direction: column;
+                                gap: 10px;
+                            "
+                        >
+                            <div class="ln"><span>Salmon</span><b>30 g</b></div>
+                            <div class="ln"><span>Sushi rice</span><b>40 g</b></div>
+                        </div>
+                        <div class="r" style="margin-top: 18px">
+                            <button
+                                class="btn sec"
+                                style="min-height: 48px; font-size: 15px; padding: 0 18px; flex: 1"
+                            >
+                                Delete</button
+                            ><button
+                                class="btn pri"
+                                style="min-height: 48px; font-size: 15px; padding: 0 18px; flex: 2"
+                            >
+                                Save item
+                            </button>
+                        </div>
+                    </aside>
+                </div>
+                <nav class="tabs">
+                    <a class="tab" href="../owner/reports.html"
+                        ><svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></svg
+                        >Reports</a
+                    ><a class="tab" href="../cashier/orders.html"
+                        ><svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <path d="M6 3h12v18l-3-2-3 2-3-2-3 2z" />
+                            <path d="M9 8h6M9 12h6" /></svg
+                        >Orders</a
+                    ><a class="tab on" href="../owner/menu-manager.html"
+                        ><svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <path d="M4 6h16M4 12h16M4 18h10" /></svg
+                        >Menu</a
+                    ><a class="tab" href="../owner/inventory.html"
+                        ><svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <path d="M3 8l9-5 9 5v8l-9 5-9-5z" />
+                            <path d="M3 8l9 5 9-5M12 13v8" /></svg
+                        >Inventory</a
+                    ><a class="tab" href="../owner/delivery.html"
+                        ><svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <circle cx="6" cy="17" r="3" />
+                            <circle cx="18" cy="17" r="3" />
+                            <path d="M9 17h6l-3-8H9M15 9h3l1 5" /></svg
+                        >Delivery</a
+                    ><a class="tab" href="../owner/staff.html"
+                        ><svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <circle cx="9" cy="8" r="3.5" />
+                            <path
+                                d="M2 20c0-4 3-6 7-6s7 2 7 6M17 5a3.5 3.5 0 0 1 0 7M22 20c0-3-2-5-4-5.5"
+                            /></svg
+                        >Staff</a
+                    >
+                </nav>
+            </div>
+        </div>
+    </body>
+</html>

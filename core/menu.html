@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Menu | Lanay</title>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Great+Vibes&display=swap"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        />
+        <link rel="stylesheet" href="../assets/style.css" />
+    </head>
+    <body>
+        <div class="bgart" aria-hidden="true">
+            <span class="ring"></span>
+            <img src="../assets/images/logo.png" alt="" />
+            <span class="wave"></span>
+        </div>
+
+        <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+            <defs>
+                <symbol id="nigiri" viewBox="0 0 64 64">
+                    <rect x="10" y="30" width="44" height="18" rx="9" fill="#fff" />
+                    <path d="M8 32c4-14 44-14 48 0z" fill="#F4A58A" />
+                    <path
+                        d="M20 26l4 4M32 24l4 4M44 26l4 4"
+                        stroke="#fff"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+                </symbol>
+                <symbol id="bowl" viewBox="0 0 64 64">
+                    <path d="M8 30h48c0 16-10 24-24 24S8 46 8 30z" fill="#fff" />
+                    <path d="M16 30c0-9 8-14 16-14s16 5 16 14z" fill="#F8C98A" />
+                </symbol>
+                <symbol id="plate" viewBox="0 0 64 64">
+                    <circle cx="32" cy="32" r="24" fill="#fff" />
+                    <circle cx="32" cy="32" r="14" fill="#F8E7A6" />
+                </symbol>
+                <symbol id="cup" viewBox="0 0 64 64">
+                    <path d="M16 18h32l-4 34H20z" fill="#fff" />
+                    <path d="M18 28h28l-1 8H19z" fill="#CFE3D3" />
+                    <path d="M34 6l4 12" stroke="#1B1D1F" stroke-width="3" stroke-linecap="round" />
+                </symbol>
+            </defs>
+        </svg>
+
+        <main class="container position-relative pt-4 pb-5 mb-5">
+            <header class="d-flex flex-wrap align-items-center gap-3 mb-4">
+                <img class="logo" src="../assets/images/logo.png" alt="Lanay Restaurant" />
+                <h1 class="page-title m-0">Menu</h1>
+                <span
+                    class="badge rounded-pill bg-white text-dark fs-6 fw-semibold ms-auto px-3 py-2"
+                    >Owner 1</span
+                >
+                <a class="btn btn-outline-dark btn-sm" href="login.html">Sign out</a>
+            </header>
+
+            <div class="card mb-4">
+                <div class="card-header bg-transparent border-0 pt-3 fw-semibold fs-5">
+                    Add Item
+                </div>
+                <div class="card-body">
+                    <form method="get" action="menu.html" class="row g-3">
+                        <input type="hidden" name="item_id" value="" />
+                        <div class="col-md-5">
+                            <label class="form-label">Name</label>
+                            <input name="item_name" class="form-control" required value="" />
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Category</label>
+                            <select name="category_id" class="form-select" required>
+                                <option value="1">Sushi</option>
+                                <option value="2">Japanese</option>
+                                <option value="3">Korean</option>
+                                <option value="4">Italian</option>
+                                <option value="5">Filipino</option>
+                                <option value="6">Drinks</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Price</label>
+                            <input
+                                type="number"
+                                step="0.01"
+                                min="0.01"
+                                name="price"
+                                class="form-control"
+                                required
+                                value=""
+                            />
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Portions per day</label>
+                            <input
+                                type="number"
+                                min="0"
+                                name="portions_left"
+                                class="form-control"
+                                placeholder="No limit"
+                                value=""
+                            />
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Portions left</th>
+                                <th>Available</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="">
+                                <td class="fw-semibold">California maki</td>
+                                <td>Sushi</td>
+                                <td>₱180.00</td>
+                                <td>No limit</td>
+                                <td>
+                                    <form method="get" action="menu.html">
+                                        <input type="hidden" name="toggle" value="2" />
+                                        <div class="form-check form-switch m-0">
+                                            <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                role="switch"
+                                                onchange="this.form.submit()"
+                                                checked
+                                                aria-label="California maki available"
+                                            />
+                                        </div>
+                                    </form>
+                                </td>
+                                <td class="text-end">
+                                    <a class="btn btn-outline-dark btn-sm" href="menu.html">Edit</a>
+                                    <form
+                                        method="get"
+                                        action="menu.html"
+                                        class="d-inline"
+                                        onsubmit="return confirm('Delete this item?');"
+                                    >
+                                        <input type="hidden" name="delete" value="2" />
+                                        <button type="submit" class="btn btn-outline-dark btn-sm">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr class="">
+                                <td class="fw-semibold">Salmon nigiri</td>
+                                <td>Sushi</td>
+                                <td>₱120.00</td>
+                                <td>20</td>
+                                <td>
+                                    <form method="get" action="menu.html">
+                                        <input type="hidden" name="toggle" value="1" />
+                                        <div class="form-check form-switch m-0">
+                                            <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                role="switch"
+                                                onchange="this.form.submit()"
+                                                checked
+                                                aria-label="Salmon nigiri available"
+                                            />
+                                        </div>
+                                    </form>
+                                </td>
+                                <td class="text-end">
+                                    <a class="btn btn-outline-dark btn-sm" href="menu.html">Edit</a>
+                                    <form
+                                        method="get"
+                                        action="menu.html"
+                                        class="d-inline"
+                                        onsubmit="return confirm('Delete this item?');"
+                                    >
+                                        <input type="hidden" name="delete" value="1" />
+                                        <button type="submit" class="btn btn-outline-dark btn-sm">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr class="">
+                                <td class="fw-semibold">Chicken katsu curry</td>
+                                <td>Japanese</td>
+                                <td>₱210.00</td>
+                                <td>No limit</td>
+                                <td>
+                                    <form method="get" action="menu.html">
+                                        <input type="hidden" name="toggle" value="3" />
+                                        <div class="form-check form-switch m-0">
+                                            <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                role="switch"
+                                                onchange="this.form.submit()"
+                                                checked
+                                                aria-label="Chicken katsu curry available"
+                                            />
+                                        </div>
+                                    </form>
+                                </td>
+                                <td class="text-end">
+                                    <a class="btn btn-outline-dark btn-sm" href="menu.html">Edit</a>
+                                    <form
+                                        method="get"
+                                        action="menu.html"
+                                        class="d-inline"
+                                        onsubmit="return confirm('Delete this item?');"
+                                    >
+                                        <input type="hidden" name="delete" value="3" />
+                                        <button type="submit" class="btn btn-outline-dark btn-sm">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr class="">
+                                <td class="fw-semibold">Gyoza</td>
+                                <td>Japanese</td>
+                                <td>₱95.00</td>
+                                <td>No limit</td>
+                                <td>
+                                    <form method="get" action="menu.html">
+                                        <input type="hidden" name="toggle" value="4" />
+                                        <div class="form-check form-switch m-0">
+                                            <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                role="switch"
+                                                onchange="this.form.submit()"
+                                                checked
+                                                aria-label="Gyoza available"
+                                            />
+                                        </div>
+                                    </form>
+                                </td>
+                                <td class="text-end">
+                                    <a class="btn btn-outline-dark btn-sm" href="menu.html">Edit</a>
+                                    <form
+                                        method="get"
+                                        action="menu.html"
+                                        class="d-inline"
+                                        onsubmit="return confirm('Delete this item?');"
+                                    >
+                                        <input type="hidden" name="delete" value="4" />
+                                        <button type="submit" class="btn btn-outline-dark btn-sm">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr class="text-secondary">
+                                <td class="fw-semibold">Tonkotsu ramen</td>
+                                <td>Japanese</td>
+                                <td>₱260.00</td>
+                                <td>0</td>
+                                <td>
+                                    <form method="get" action="menu.html">
+                                        <input type="hidden" name="toggle" value="5" />
+                                        <div class="form-check form-switch m-0">
+                                            <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                role="switch"
+                                                onchange="this.form.submit()"
+                                                aria-label="Tonkotsu ramen available"
+                                            />
+                                        </div>
+                                    </form>
+                                </td>
+                                <td class="text-end">
+                                    <a class="btn btn-outline-dark btn-sm" href="menu.html">Edit</a>
+                                    <form
+                                        method="get"
+                                        action="menu.html"
+                                        class="d-inline"
+                                        onsubmit="return confirm('Delete this item?');"
+                                    >
+                                        <input type="hidden" name="delete" value="5" />
+                                        <button type="submit" class="btn btn-outline-dark btn-sm">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr class="">
+                                <td class="fw-semibold">Iced matcha</td>
+                                <td>Drinks</td>
+                                <td>₱85.00</td>
+                                <td>No limit</td>
+                                <td>
+                                    <form method="get" action="menu.html">
+                                        <input type="hidden" name="toggle" value="6" />
+                                        <div class="form-check form-switch m-0">
+                                            <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                role="switch"
+                                                onchange="this.form.submit()"
+                                                checked
+                                                aria-label="Iced matcha available"
+                                            />
+                                        </div>
+                                    </form>
+                                </td>
+                                <td class="text-end">
+                                    <a class="btn btn-outline-dark btn-sm" href="menu.html">Edit</a>
+                                    <form
+                                        method="get"
+                                        action="menu.html"
+                                        class="d-inline"
+                                        onsubmit="return confirm('Delete this item?');"
+                                    >
+                                        <input type="hidden" name="delete" value="6" />
+                                        <button type="submit" class="btn btn-outline-dark btn-sm">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <nav class="tabs d-print-none">
+            <a class="tab" href="tables.html">Tables</a>
+            <a class="tab" href="kitchen.html">Kitchen</a>
+            <a class="tab active" href="menu.html">Menu</a>
+        </nav>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

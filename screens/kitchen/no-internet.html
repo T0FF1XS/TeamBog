@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Lanay offline</title>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Great+Vibes&display=swap"
+        />
+        <link rel="stylesheet" href="../assets/staff.css" />
+    </head>
+    <body>
+        <div class="pg" style="min-height: 860px">
+            <div class="bgart" aria-hidden="true">
+                <span class="b2"></span><span class="b3"></span><span class="ring"></span
+                ><span class="wave"></span
+                ><img class="wm" src="../../assets/images/logo.png" alt="" aria-hidden="true" />
+            </div>
+            <div class="wr">
+                <div class="bar">
+                    <img
+                        class="lg"
+                        src="../../assets/images/logo.png"
+                        alt="Lanay Restaurant"
+                        style="width: 56px; height: 56px"
+                    />
+                    <h1 class="h1">No internet</h1>
+                    <span class="chip" style="background: #fff; margin-left: auto">Waiter</span
+                    ><b>6:42 PM</b>
+                </div>
+                <div
+                    class="card"
+                    style="
+                        background: #f8e7a6;
+                        display: flex;
+                        align-items: center;
+                        gap: 16px;
+                        margin-bottom: 20px;
+                    "
+                >
+                    <span
+                        style="
+                            width: 56px;
+                            height: 56px;
+                            border-radius: 18px;
+                            background: #fff;
+                            display: grid;
+                            place-items: center;
+                        "
+                        ><svg
+                            width="30"
+                            height="30"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="M2 9a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"
+                            />
+                            <circle cx="12" cy="19.5" r="1" />
+                            <path d="M3 3l18 18" /></svg
+                    ></span>
+                    <div>
+                        <b style="font-size: 20px">You are offline</b>
+                        <div style="font-size: 15px">
+                            Keep taking orders. They are saved on this device and sent when the
+                            internet is back.
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+                    <div class="card" style="flex: 1 1 600px; padding: 18px">
+                        <p class="h2">Waiting to send</p>
+                        <table class="tbl">
+                            <thead>
+                                <tr>
+                                    <th>Order</th>
+                                    <th>Where</th>
+                                    <th>Saved at</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0043</td>
+                                    <td>Table 3</td>
+                                    <td>6:44 PM</td>
+                                    <td>
+                                        <span
+                                            class="chip"
+                                            style="background: #f8e7a6; color: #5a4300"
+                                            >Saved on this device</span
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>0044</td>
+                                    <td>Table 8</td>
+                                    <td>6:46 PM</td>
+                                    <td>
+                                        <span
+                                            class="chip"
+                                            style="background: #f8e7a6; color: #5a4300"
+                                            >Saved on this device</span
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>0045</td>
+                                    <td>Takeout</td>
+                                    <td>6:47 PM</td>
+                                    <td>
+                                        <span
+                                            class="chip"
+                                            style="background: #f8e7a6; color: #5a4300"
+                                            >Saved on this device</span
+                                        >
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <aside class="card" style="flex: 0 1 340px; min-width: 300px">
+                        <p class="h2">Connection</p>
+                        <p style="margin: 0 0 16px; font-size: 15px; color: #5b5f63">
+                            Last connected at 6:43 PM.
+                        </p>
+                        <button
+                            class="btn pri"
+                            style="
+                                min-height: 48px;
+                                font-size: 15px;
+                                padding: 0 18px;
+                                width: 100%;
+                                min-height: 58px;
+                            "
+                        >
+                            Try again
+                        </button>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
