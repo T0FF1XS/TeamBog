@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Lanay table QR codes</title>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Great+Vibes&display=swap"
+        />
+        <link rel="stylesheet" href="../assets/staff.css" />
+        <style>
+            .qr-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
+                gap: 16px;
+            }
+            .qr-card {
+                min-width: 0;
+                text-align: center;
+            }
+            .qr-image {
+                display: grid;
+                place-items: center;
+                width: min(100%, 230px);
+                min-height: 230px;
+                margin: 12px auto;
+                padding: 12px;
+                background: #fff;
+                border: 1px solid #eceae4;
+                border-radius: 16px;
+            }
+            .qr-image svg {
+                display: block;
+                width: 100%;
+                height: auto;
+            }
+            .qr-url {
+                width: 100%;
+                min-height: 44px;
+                padding: 8px;
+                border: 1px solid #dad8d1;
+                border-radius: 10px;
+                font: 12px monospace;
+            }
+            .qr-actions {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+                margin-top: 10px;
+            }
+            .qr-actions .btn {
+                min-height: 42px;
+                padding: 0 12px;
+                font-size: 14px;
+            }
+            .qr-feedback {
+                margin: 12px 0;
+                padding: 12px 14px;
+                border-radius: 14px;
+                background: #fbe5df;
+                color: #7a2a10;
+            }
+            .qr-feedback:empty {
+                display: none;
+            }
+            @media print {
+                .bgart,
+                .bar,
+                .tabs,
+                .qr-intro,
+                .qr-actions,
+                .qr-feedback,
+                .qr-url {
+                    display: none !important;
+                }
+                .pg {
+                    padding: 0;
+                    background: #fff;
+                }
+                .qr-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 10mm;
+                }
+                .qr-card {
+                    break-inside: avoid;
+                    border: 1px solid #bbb;
+                    box-shadow: none;
+                }
+                .qr-image {
+                    width: 55mm;
+                    min-height: 55mm;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="pg">
+            <div class="bgart" aria-hidden="true">
+                <span class="b2"></span><span class="b3"></span><span class="ring"></span
+                ><span class="wave"></span
+                ><img class="wm" src="../../assets/images/logo.png" alt="" aria-hidden="true" />
+            </div>
+            <main class="wr">
+                <header class="bar">
+                    <img
+                        class="lg"
+                        src="../../assets/images/logo.png"
+                        alt="Lanay Restaurant"
+                        style="width: 56px; height: 56px"
+                    />
+                    <h1 class="h1">Table QR codes</h1>
+                    <span id="owner-name" class="chip" style="background: #fff; margin-left: auto"
+                        >Owner</span
+                    >
+                    <button id="print-codes" class="btn sec" type="button" style="min-height: 44px">
+                        Print codes
+                    </button>
+                </header>
+                <section class="card qr-intro">
+                    <h2 class="h2">Customer ordering</h2>
+                    <p style="margin: 0; color: #5b5f63">
+                        Print a card for each table. Scanning opens the customer menu for that table;
+                        submitted orders go directly to the kitchen. Rotating a code immediately
+                        invalidates the old printout.
+                    </p>
+                </section>
+                <p id="qr-feedback" class="qr-feedback" role="status" aria-live="polite"></p>
+                <section id="qr-grid" class="qr-grid" aria-label="Table QR codes">
+                    <div class="card">Loading table codes…</div>
+                </section>
+                <nav class="tabs" aria-label="Owner navigation">
+                    <a class="tab" href="reports.html">Reports</a>
+                    <a class="tab" href="../cashier/orders.html">Orders</a>
+                    <a class="tab" href="menu-manager.html">Menu</a>
+                    <a class="tab" href="inventory.html">Inventory</a>
+                    <a class="tab" href="staff.html">Staff</a>
+                    <a class="tab on" href="qr-orders.html" aria-current="page">Table QR</a>
+                </nav>
+            </main>
+        </div>
+        <script src="../../assets/vendor/qrcode-generator.js"></script>
+        <script>
+            var csrfToken = "";
+            var qrGrid = document.getElementById("qr-grid");
+            var feedback = document.getElementById("qr-feedback");
+
+            async function readJson(response, message) {
+                var result;
+                try {
+                    result = await response.json();
+                } catch (error) {
+                    throw new Error(message);
+                }
+                if (!response.ok) {
+                    throw new Error(result.error || message);
+                }
+                return result;
+            }
+
+            function tableUrl(token) {
+                return new URL(
+                    "../../core/customer-order.html?token=" + encodeURIComponent(token),
+                    window.location.href,
+                ).href;
+            }
+
+            function renderTables(tables) {
+                qrGrid.textContent = "";
+                tables.forEach(function (table) {
+                    var card = document.createElement("article");
+                    card.className = "card qr-card";
+                    var title = document.createElement("h2");
+                    title.className = "h2";
+                    title.textContent = "Table " + table.number + " · " + table.seats + " seats";
+                    card.appendChild(title);
+
+                    var image = document.createElement("div");
+                    image.className = "qr-image";
+                    var qr = qrcode(0, "M");
+                    qr.addData(tableUrl(table.token));
+                    qr.make();
+                    image.innerHTML = qr.createSvgTag(5, 2, {
+                        text: "Scan to order at Table " + table.number,
+                        id: "qr-description-table-" + table.number,
+                    });
+                    card.appendChild(image);
+
+                    var url = document.createElement("input");
+                    url.className = "qr-url";
+                    url.type = "text";
+                    url.readOnly = true;
+                    url.value = tableUrl(table.token);
+                    url.setAttribute("aria-label", "Customer order link for table " + table.number);
+                    card.appendChild(url);
+
+                    var actions = document.createElement("div");
+                    actions.className = "qr-actions";
+                    var copy = document.createElement("button");
+                    copy.type = "button";
+                    copy.className = "btn sec";
+                    copy.textContent = "Copy link";
+                    copy.addEventListener("click", async function () {
+                        try {
+                            await navigator.clipboard.writeText(url.value);
+                            feedback.textContent = "Table " + table.number + " link copied.";
+                        } catch (error) {
+                            url.focus();
+                            url.select();
+                            feedback.textContent = "Select and copy the highlighted table link.";
+                        }
+                    });
+                    var rotate = document.createElement("button");
+                    rotate.type = "button";
+                    rotate.className = "btn sec";
+                    rotate.textContent = "Rotate code";
+                    rotate.addEventListener("click", async function () {
+                        if (
+                            !window.confirm(
+                                "Rotate Table " +
+                                    table.number +
+                                    "'s QR code? The previous code will stop working.",
+                            )
+                        ) {
+                            return;
+                        }
+                        rotate.disabled = true;
+                        try {
+                            var result = await readJson(
+                                await fetch("../../api/table-qr.php", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "X-CSRF-Token": csrfToken,
+                                    },
+                                    body: JSON.stringify({
+                                        action: "rotate",
+                                        tableNumber: table.number,
+                                    }),
+                                }),
+                                "Could not rotate this table code.",
+                            );
+                            table.token = result.token;
+                            await loadTables();
+                            feedback.textContent =
+                                "Table " + table.number + " code rotated. Reprint its new card.";
+                        } catch (error) {
+                            feedback.textContent = error.message;
+                            rotate.disabled = false;
+                        }
+                    });
+                    actions.appendChild(copy);
+                    actions.appendChild(rotate);
+                    card.appendChild(actions);
+                    qrGrid.appendChild(card);
+                });
+            }
+
+            async function loadTables() {
+                var sessionResponse = await fetch("../../api/auth/session.php");
+                if (sessionResponse.status === 401) {
+                    window.location.replace("../../core/login.html");
+                    return;
+                }
+                var session = await readJson(sessionResponse, "Could not verify the owner session.");
+                if (session.staff.role !== "owner") {
+                    throw new Error("Only an owner can manage table QR codes.");
+                }
+                csrfToken = session.csrfToken;
+                document.getElementById("owner-name").textContent = session.staff.name;
+                var result = await readJson(
+                    await fetch("../../api/table-qr.php"),
+                    "Could not load table QR codes.",
+                );
+                renderTables(result.tables);
+            }
+
+            document.getElementById("print-codes").addEventListener("click", function () {
+                window.print();
+            });
+            loadTables().catch(function (error) {
+                qrGrid.textContent = "";
+                var message = document.createElement("div");
+                message.className = "card";
+                message.textContent = error.message;
+                qrGrid.appendChild(message);
+            });
+        </script>
+    </body>
+</html>

@@ -9,186 +9,266 @@
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Great+Vibes&display=swap"
         />
         <link rel="stylesheet" href="../assets/staff.css" />
+        <style>
+            .bill-layout {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+                gap: 20px;
+                align-items: start;
+            }
+            .bill-items {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+            .bill-line {
+                display: flex;
+                justify-content: space-between;
+                gap: 14px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #eceae4;
+            }
+            .bill-total {
+                font-size: 26px;
+                font-weight: 700;
+            }
+            .status-message {
+                margin: 12px 0 0;
+                padding: 12px 14px;
+                border-radius: 14px;
+            }
+            .status-message:empty {
+                display: none;
+            }
+            .status-error {
+                background: #fbe5df;
+                color: #7a2a10;
+            }
+            .status-ok {
+                background: #e2eee4;
+                color: #2d5a3a;
+            }
+            @media (max-width: 760px) {
+                .bill-layout {
+                    grid-template-columns: minmax(0, 1fr);
+                }
+            }
+        </style>
     </head>
     <body>
-        <div class="pg" style="min-height: 1040px">
+        <div class="pg">
             <div class="bgart" aria-hidden="true">
                 <span class="b2"></span><span class="b3"></span><span class="ring"></span
-                ><span class="wave"></span
-                ><img class="wm" src="../../assets/images/logo.png" alt="" aria-hidden="true" />
+                ><span class="wave"></span>
             </div>
-            <div class="wr">
-                <div class="bar">
-                    <a
-                        class="btn sec"
-                        href="../waiter/tables.html"
-                        style="min-height: 52px; font-size: 16px"
-                        >Back to tables</a
+            <main class="wr">
+                <header class="bar">
+                    <a class="btn sec" href="orders.html" style="min-height: 44px">Back to orders</a>
+                    <h1 class="h1">Payment</h1>
+                    <span id="cashier-name" class="chip" style="background: #fff; margin-left: auto"
+                        >Cashier</span
                     >
-                    <h1 class="h1">Bill, Table 6</h1>
-                    <span class="chip" style="background: #fff; margin-left: auto">Cashier</span>
-                </div>
-                <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
-                    <div
-                        class="card"
-                        style="flex: 1 1 480px; display: flex; flex-direction: column; gap: 18px"
-                    >
-                        <div class="r" style="flex-wrap: wrap">
-                            <span class="chip" style="background: #cfe3d3">3 guests</span
-                            ><span class="chip" style="background: #fbefc0">Dine-in</span
-                            ><span class="chip" style="background: #e8e5de">Order 0042</span>
+                </header>
+                <div class="bill-layout">
+                    <section class="card" aria-labelledby="bill-heading">
+                        <h2 id="bill-heading" class="h2">Order bill</h2>
+                        <p id="order-meta" style="color: #5b5f63">Loading order…</p>
+                        <div id="bill-items" class="bill-items"></div>
+                        <div class="bill-line bill-total" style="border-top: 2px dashed #d8d6cf; padding-top: 14px">
+                            <span>Total due</span><span id="bill-total">—</span>
                         </div>
-                        <div style="display: flex; flex-direction: column; gap: 12px">
-                            <div class="ln"><span>2× Salmon nigiri</span><b>₱240.00</b></div>
-                            <div class="ln"><span>1× California maki</span><b>₱180.00</b></div>
-                            <div class="ln"><span>1× Chicken katsu curry</span><b>₱210.00</b></div>
+                    </section>
+                    <form id="payment-form" class="card">
+                        <h2 class="h2">Record full payment</h2>
+                        <p style="margin-top: 0; color: #5b5f63">
+                            Payment is recorded once and cannot be changed here.
+                        </p>
+                        <label class="lbl" for="payment-method">Payment method</label>
+                        <select id="payment-method" class="inp" required>
+                            <option value="cash">Cash</option>
+                            <option value="gcash">GCash</option>
+                            <option value="card">Card</option>
+                        </select>
+                        <div id="cash-fields">
+                            <label class="lbl" for="amount-received">Cash received (₱)</label>
+                            <input
+                                id="amount-received"
+                                class="inp"
+                                type="number"
+                                min="0.01"
+                                step="0.01"
+                                inputmode="decimal"
+                                required
+                            />
+                            <p id="change-due" style="margin: 8px 0 0; font-weight: 600"></p>
                         </div>
-                        <div class="ln" style="border-top: 2px dashed #d8d6cf; padding-top: 14px">
-                            <span>Subtotal</span><b>₱630.00</b>
+                        <div id="reference-fields" hidden>
+                            <label class="lbl" for="payment-reference">Transaction reference (optional)</label>
+                            <input id="payment-reference" class="inp" maxlength="120" autocomplete="off" />
                         </div>
-                        <div class="ln"><span>Discount</span><b>₱0.00</b></div>
-                        <div
-                            class="ln"
-                            style="
-                                font-size: 28px;
-                                background: #fbf1cf;
-                                border-radius: 20px;
-                                padding: 16px 20px;
-                            "
-                        >
-                            <b>Total</b><b>₱630.00</b>
-                        </div>
-                        <div>
-                            <b style="font-size: 15px">Discount</b>
-                            <div class="r" style="margin-top: 10px; flex-wrap: wrap">
-                                <button class="btn pri" style="flex: 1; min-width: 120px">
-                                    None</button
-                                ><button class="btn sec" style="flex: 1; min-width: 120px">
-                                    Senior</button
-                                ><button class="btn sec" style="flex: 1; min-width: 120px">
-                                    PWD
-                                </button>
-                            </div>
-                            <p style="margin: 10px 0 0; font-size: 14px; color: #5b5f63">
-                                Choosing Senior or PWD asks for the diner and ID number.
-                            </p>
-                        </div>
-                        <div>
-                            <b style="font-size: 15px">Payment</b>
-                            <div class="r" style="margin-top: 10px; flex-wrap: wrap">
-                                <button class="btn pri" style="flex: 1; min-width: 120px">
-                                    <svg
-                                        width="22"
-                                        height="22"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        aria-hidden="true"
-                                    >
-                                        <circle cx="12" cy="12" r="8" />
-                                        <path
-                                            d="M12 7v10M9.5 10c0-2 5-2 5 0s-5 2-5 4 5 2 5 0"
-                                        /></svg
-                                    >Cash</button
-                                ><button class="btn sec" style="flex: 1; min-width: 120px">
-                                    <svg
-                                        width="22"
-                                        height="22"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        aria-hidden="true"
-                                    >
-                                        <rect x="7" y="3" width="10" height="18" rx="2" />
-                                        <path d="M11 18h2" /></svg
-                                    >GCash</button
-                                ><button class="btn sec" style="flex: 1; min-width: 120px">
-                                    <svg
-                                        width="22"
-                                        height="22"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        aria-hidden="true"
-                                    >
-                                        <rect x="3" y="6" width="18" height="12" rx="2" />
-                                        <path d="M3 10h18" /></svg
-                                    >Card
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <aside
-                        class="card"
-                        style="
-                            flex: 0 1 460px;
-                            min-width: 300px;
-                            display: flex;
-                            flex-direction: column;
-                            gap: 16px;
-                        "
-                    >
-                        <div>
-                            <span style="font-size: 15px; color: #5b5f63">Cash received</span>
-                            <div style="font-size: 50px; font-weight: 600; letter-spacing: -0.02em">
-                                ₱1,000.00
-                            </div>
-                        </div>
-                        <div class="r" style="gap: 10px">
-                            <button
-                                class="btn sec"
-                                style="flex: 1; min-height: 56px; font-size: 16px; padding: 0 10px"
-                            >
-                                Exact ₱630</button
-                            ><button
-                                class="btn sec"
-                                style="flex: 1; min-height: 56px; font-size: 16px; padding: 0 10px"
-                            >
-                                ₱700</button
-                            ><button
-                                class="btn pri"
-                                style="flex: 1; min-height: 56px; font-size: 16px; padding: 0 10px"
-                            >
-                                ₱1,000
-                            </button>
-                        </div>
-                        <div
-                            style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px"
-                        >
-                            <button class="k">1</button><button class="k">2</button
-                            ><button class="k">3</button><button class="k">4</button
-                            ><button class="k">5</button><button class="k">6</button
-                            ><button class="k">7</button><button class="k">8</button
-                            ><button class="k">9</button><button class="k">0</button
-                            ><button class="k">00</button><button class="k">Del</button>
-                        </div>
-                        <div
-                            class="r"
-                            style="
-                                justify-content: space-between;
-                                background: #cfe3d3;
-                                border-radius: 20px;
-                                padding: 16px 20px;
-                            "
-                        >
-                            <span style="font-size: 17px; font-weight: 500">Change due</span
-                            ><b style="font-size: 34px">₱370.00</b>
-                        </div>
-                        <button class="btn pri" style="min-height: 68px; font-size: 20px">
-                            Complete and print receipt
+                        <button id="complete-payment" type="submit" class="btn pri" style="width: 100%; margin-top: 18px">
+                            Complete payment
                         </button>
-                    </aside>
+                        <p id="payment-feedback" class="status-message" role="status" aria-live="polite"></p>
+                    </form>
                 </div>
-            </div>
+                <nav class="tabs" aria-label="Cashier navigation">
+                    <a class="tab" href="orders.html">Orders</a>
+                    <a class="tab on" href="billing.html" aria-current="page">Billing</a>
+                    <a class="tab" href="receipt.html">Receipt</a>
+                </nav>
+            </main>
         </div>
+        <script>
+            var csrfToken = "";
+            var currentOrder = null;
+            var orderId = Number(new URLSearchParams(window.location.search).get("orderId"));
+            var paymentMethod = document.getElementById("payment-method");
+            var amountReceived = document.getElementById("amount-received");
+            var paymentFeedback = document.getElementById("payment-feedback");
+            var paymentButton = document.getElementById("complete-payment");
+
+            function money(value) {
+                return "₱" + Number(value).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                });
+            }
+
+            function showFeedback(message, success) {
+                paymentFeedback.textContent = message;
+                paymentFeedback.className =
+                    "status-message " + (success ? "status-ok" : "status-error");
+            }
+
+            async function readJson(response, message) {
+                var result;
+                try {
+                    result = await response.json();
+                } catch (error) {
+                    throw new Error(message);
+                }
+                if (!response.ok) {
+                    throw new Error(result.error || message);
+                }
+                return result;
+            }
+
+            function updateMethodFields() {
+                var cash = paymentMethod.value === "cash";
+                document.getElementById("cash-fields").hidden = !cash;
+                document.getElementById("reference-fields").hidden = cash;
+                amountReceived.required = cash;
+                updateChange();
+            }
+
+            function updateChange() {
+                if (!currentOrder || paymentMethod.value !== "cash") {
+                    return;
+                }
+                var received = Math.round(Number(amountReceived.value) * 100);
+                var due = Math.round(Number(currentOrder.total) * 100);
+                var change = received - due;
+                document.getElementById("change-due").textContent =
+                    change >= 0 ? "Change due: " + money(change / 100) : "Cash received is below the amount due.";
+            }
+
+            async function loadBill() {
+                if (!Number.isInteger(orderId) || orderId < 1) {
+                    showFeedback("Open billing from a served order.", false);
+                    paymentButton.disabled = true;
+                    return;
+                }
+                try {
+                    var sessionResponse = await fetch("../../api/auth/session.php");
+                    if (sessionResponse.status === 401) {
+                        window.location.replace("../../core/login.html");
+                        return;
+                    }
+                    var session = await readJson(sessionResponse, "Could not verify the staff session.");
+                    if (!["cashier", "owner"].includes(session.staff.role)) {
+                        throw new Error("Only a cashier or owner can record payments.");
+                    }
+                    csrfToken = session.csrfToken;
+                    document.getElementById("cashier-name").textContent = session.staff.name;
+                    var response = await fetch("../../api/orders.php");
+                    var result = await readJson(response, "Could not load the order.");
+                    currentOrder = result.orders.find(function (order) {
+                        return order.id === orderId;
+                    });
+                    if (!currentOrder || currentOrder.status !== "served") {
+                        throw new Error("This order is not awaiting payment. Refresh the order list.");
+                    }
+                    document.getElementById("order-meta").textContent =
+                        "Order #" +
+                        String(currentOrder.id).padStart(4, "0") +
+                        " · Table " +
+                        currentOrder.tableNumber +
+                        " · " +
+                        currentOrder.guests +
+                        " guests";
+                    var items = document.getElementById("bill-items");
+                    items.textContent = "";
+                    currentOrder.items.forEach(function (item) {
+                        var line = document.createElement("div");
+                        line.className = "bill-line";
+                        var description = document.createElement("span");
+                        description.textContent = item.quantity + "× " + item.name;
+                        var price = document.createElement("strong");
+                        price.textContent = money(Number(item.price) * item.quantity);
+                        line.appendChild(description);
+                        line.appendChild(price);
+                        items.appendChild(line);
+                    });
+                    document.getElementById("bill-total").textContent = money(currentOrder.total);
+                    amountReceived.value = Number(currentOrder.total).toFixed(2);
+                    paymentButton.disabled = false;
+                    updateMethodFields();
+                } catch (error) {
+                    showFeedback(error.message, false);
+                    paymentButton.disabled = true;
+                }
+            }
+
+            paymentMethod.addEventListener("change", updateMethodFields);
+            amountReceived.addEventListener("input", updateChange);
+            document.getElementById("payment-form").addEventListener("submit", async function (event) {
+                event.preventDefault();
+                if (!currentOrder || paymentButton.disabled) {
+                    return;
+                }
+                paymentButton.disabled = true;
+                paymentFeedback.textContent = "";
+                var body = {
+                    orderId: currentOrder.id,
+                    method: paymentMethod.value,
+                    reference:
+                        paymentMethod.value === "cash"
+                            ? ""
+                            : document.getElementById("payment-reference").value.trim(),
+                };
+                if (paymentMethod.value === "cash") {
+                    body.amountReceived = amountReceived.value;
+                }
+                try {
+                    await readJson(
+                        await fetch("../../api/payments.php", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRF-Token": csrfToken,
+                            },
+                            body: JSON.stringify(body),
+                        }),
+                        "Payment could not be recorded.",
+                    );
+                    window.location.replace("receipt.html?orderId=" + encodeURIComponent(currentOrder.id));
+                } catch (error) {
+                    showFeedback(error.message, false);
+                    paymentButton.disabled = false;
+                }
+            });
+            loadBill();
+        </script>
     </body>
 </html>

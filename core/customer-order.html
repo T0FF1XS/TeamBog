@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="referrer" content="no-referrer" />
+        <title>Order at Lanay</title>
+        <style>
+            :root {
+                color-scheme: light;
+                font-family: Arial, sans-serif;
+                color: #1b1d1f;
+                background: #f6f5f2;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                margin: 0;
+            }
+            .page {
+                width: min(1120px, 100%);
+                margin: 0 auto;
+                padding: 20px;
+            }
+            .header,
+            .layout,
+            .row,
+            .cart-line,
+            .status-line {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            .header {
+                flex-wrap: wrap;
+                margin-bottom: 18px;
+            }
+            .header h1 {
+                margin: 0;
+                font-size: clamp(26px, 7vw, 38px);
+            }
+            .table-chip {
+                margin-left: auto;
+                padding: 8px 14px;
+                border-radius: 99px;
+                background: #cfe3d3;
+                font-weight: 700;
+            }
+            .layout {
+                align-items: flex-start;
+            }
+            .menu,
+            .order {
+                min-width: 0;
+                padding: 18px;
+                border-radius: 22px;
+                background: #fff;
+                box-shadow: 0 10px 30px rgba(27, 29, 31, 0.08);
+            }
+            .menu {
+                flex: 1 1 620px;
+            }
+            .order {
+                flex: 0 1 380px;
+                position: sticky;
+                top: 16px;
+            }
+            .filters {
+                display: flex;
+                gap: 8px;
+                overflow-x: auto;
+                padding: 2px 0 12px;
+            }
+            button,
+            input,
+            textarea {
+                font: inherit;
+            }
+            button {
+                cursor: pointer;
+            }
+            button:disabled {
+                cursor: not-allowed;
+                opacity: 0.55;
+            }
+            .filter,
+            .secondary {
+                min-height: 42px;
+                padding: 0 14px;
+                border: 2px solid #dad8d1;
+                border-radius: 99px;
+                background: #fff;
+                color: #1b1d1f;
+                white-space: nowrap;
+            }
+            .filter[aria-pressed="true"] {
+                background: #1b1d1f;
+                border-color: #1b1d1f;
+                color: #fff;
+            }
+            .menu-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 12px;
+            }
+            .menu-item {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                min-height: 150px;
+                padding: 14px;
+                border: 1px solid #eceae4;
+                border-radius: 18px;
+                background: #fff;
+                text-align: left;
+            }
+            .menu-item strong {
+                font-size: 16px;
+            }
+            .price {
+                margin-top: auto;
+                color: #5b5f63;
+            }
+            .sold-out {
+                color: #7a2a10;
+                font-weight: 700;
+            }
+            .field-label {
+                display: block;
+                margin: 14px 0 6px;
+                font-weight: 700;
+            }
+            .field {
+                width: 100%;
+                min-height: 48px;
+                padding: 10px 12px;
+                border: 2px solid #dad8d1;
+                border-radius: 12px;
+                background: #fff;
+            }
+            .guest-controls {
+                justify-content: flex-end;
+            }
+            .circle {
+                width: 42px;
+                height: 42px;
+                border: 0;
+                border-radius: 50%;
+                background: #eceae4;
+                font-size: 22px;
+            }
+            .cart-lines {
+                display: grid;
+                gap: 10px;
+                margin: 14px 0;
+            }
+            .cart-line {
+                justify-content: space-between;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #eceae4;
+            }
+            .qty-controls {
+                flex: none;
+            }
+            .total {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 16px;
+                padding-top: 14px;
+                border-top: 2px solid #eceae4;
+                font-size: 20px;
+                font-weight: 700;
+            }
+            .primary {
+                width: 100%;
+                min-height: 54px;
+                margin-top: 14px;
+                border: 0;
+                border-radius: 14px;
+                background: #1b1d1f;
+                color: #fff;
+                font-weight: 700;
+            }
+            .message {
+                margin: 12px 0 0;
+                padding: 12px;
+                border-radius: 12px;
+                background: #fbe5df;
+                color: #7a2a10;
+            }
+            .message:empty {
+                display: none;
+            }
+            .message.success {
+                background: #e2eee4;
+                color: #2d5a3a;
+            }
+            .status-card {
+                margin-top: 16px;
+                padding: 14px;
+                border-radius: 16px;
+                background: #fbf1cf;
+            }
+            .status-line {
+                justify-content: space-between;
+                margin-top: 6px;
+            }
+            .status-card[hidden] {
+                display: none;
+            }
+            @media (max-width: 820px) {
+                .layout {
+                    flex-direction: column;
+                }
+                .menu,
+                .order {
+                    width: 100%;
+                    flex: 1 1 auto;
+                }
+                .order {
+                    position: static;
+                }
+            }
+            @media (max-width: 480px) {
+                .page {
+                    padding: 12px;
+                }
+                .menu,
+                .order {
+                    padding: 14px;
+                }
+                .menu-grid {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+            }
+            :focus-visible {
+                outline: 3px solid #587b60;
+                outline-offset: 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <main class="page">
+            <header class="header">
+                <h1>Order from Lanay</h1>
+                <span id="table-chip" class="table-chip">Loading table…</span>
+            </header>
+            <div class="layout">
+                <section class="menu" aria-labelledby="menu-heading">
+                    <h2 id="menu-heading">Menu</h2>
+                    <div id="filters" class="filters" role="group" aria-label="Menu categories"></div>
+                    <div id="menu-grid" class="menu-grid">
+                        <p>Loading menu…</p>
+                    </div>
+                </section>
+                <section class="order" aria-labelledby="order-heading">
+                    <h2 id="order-heading">Your order</h2>
+                    <div class="row">
+                        <label for="guest-count">Guests</label>
+                        <div class="row guest-controls">
+                            <button id="guest-minus" class="circle" type="button" aria-label="Fewer guests">
+                                −
+                            </button>
+                            <strong id="guest-count-label">1</strong>
+                            <button id="guest-plus" class="circle" type="button" aria-label="More guests">
+                                +
+                            </button>
+                        </div>
+                        <input id="guest-count" type="hidden" value="1" />
+                    </div>
+                    <div id="cart-lines" class="cart-lines">
+                        <p>Your cart is empty.</p>
+                    </div>
+                    <label class="field-label" for="order-note">Note for the kitchen (optional)</label>
+                    <textarea
+                        id="order-note"
+                        class="field"
+                        rows="3"
+                        maxlength="500"
+                        placeholder="Allergies or special instructions"
+                    ></textarea>
+                    <div class="total"><span>Total</span><span id="order-total">₱0.00</span></div>
+                    <button id="submit-order" class="primary" type="button" disabled>
+                        Send directly to kitchen
+                    </button>
+                    <p id="order-feedback" class="message" role="status" aria-live="polite"></p>
+                    <section id="tracking-card" class="status-card" hidden aria-live="polite">
+                        <strong id="tracking-title">Order sent</strong>
+                        <p id="tracking-description" style="margin: 6px 0"></p>
+                        <div id="tracking-items"></div>
+                    </section>
+                </section>
+            </div>
+        </main>
+        <script>
+            var tableToken = new URLSearchParams(window.location.search).get("token") || "";
+            var tableNumber = null;
+            var maxGuests = 1;
+            var guests = 1;
+            var items = [];
+            var cart = new Map();
+            var currentFilter = 0;
+            var currentOrderId = null;
+            var trackingToken = null;
+            var pollTimer = null;
+            var trackingStorageKey = "lanay-current-order-" + tableToken;
+
+            function money(value) {
+                return "₱" + Number(value).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                });
+            }
+
+            function showMessage(message, success) {
+                var feedback = document.getElementById("order-feedback");
+                feedback.textContent = message;
+                feedback.className = "message" + (success ? " success" : "");
+            }
+
+            async function readJson(response, message) {
+                var result;
+                try {
+                    result = await response.json();
+                } catch (error) {
+                    throw new Error(message);
+                }
+                if (!response.ok) {
+                    throw new Error(result.error || message);
+                }
+                return result;
+            }
+
+            function renderFilters() {
+                var filters = document.getElementById("filters");
+                filters.textContent = "";
+                var categories = [{ id: 0, name: "All" }];
+                var seen = new Set();
+                items.forEach(function (item) {
+                    if (!seen.has(item.categoryId)) {
+                        seen.add(item.categoryId);
+                        categories.push({ id: item.categoryId, name: item.category });
+                    }
+                });
+                categories.forEach(function (category) {
+                    var button = document.createElement("button");
+                    button.type = "button";
+                    button.className = "filter";
+                    button.textContent = category.name;
+                    button.setAttribute(
+                        "aria-pressed",
+                        category.id === currentFilter ? "true" : "false",
+                    );
+                    button.addEventListener("click", function () {
+                        currentFilter = category.id;
+                        renderFilters();
+                        renderMenu();
+                    });
+                    filters.appendChild(button);
+                });
+            }
+
+            function renderMenu() {
+                var grid = document.getElementById("menu-grid");
+                grid.textContent = "";
+                var visible = items.filter(function (item) {
+                    return currentFilter === 0 || item.categoryId === currentFilter;
+                });
+                if (!visible.length) {
+                    grid.textContent = "No active menu items.";
+                    return;
+                }
+                visible.forEach(function (item) {
+                    var button = document.createElement("button");
+                    button.type = "button";
+                    button.className = "menu-item";
+                    button.disabled = !item.available;
+                    var name = document.createElement("strong");
+                    name.textContent = item.name;
+                    var category = document.createElement("span");
+                    category.textContent = item.category;
+                    var price = document.createElement("span");
+                    price.className = item.available ? "price" : "price sold-out";
+                    price.textContent = item.available ? money(item.price) : "Sold out";
+                    button.appendChild(name);
+                    button.appendChild(category);
+                    button.appendChild(price);
+                    button.addEventListener("click", function () {
+                        var line = cart.get(item.id);
+                        cart.set(item.id, {
+                            itemId: item.id,
+                            name: item.name,
+                            price: Number(item.price),
+                            quantity: line ? line.quantity + 1 : 1,
+                        });
+                        renderCart();
+                    });
+                    grid.appendChild(button);
+                });
+            }
+
+            function renderCart() {
+                var container = document.getElementById("cart-lines");
+                container.textContent = "";
+                var totalCents = 0;
+                if (!cart.size) {
+                    container.textContent = "Your cart is empty.";
+                }
+                cart.forEach(function (line, id) {
+                    totalCents += Math.round(line.price * 100) * line.quantity;
+                    var row = document.createElement("div");
+                    row.className = "cart-line";
+                    var name = document.createElement("span");
+                    name.textContent = line.quantity + "× " + line.name;
+                    var controls = document.createElement("span");
+                    controls.className = "row qty-controls";
+                    var remove = document.createElement("button");
+                    remove.type = "button";
+                    remove.className = "circle";
+                    remove.textContent = "−";
+                    remove.setAttribute("aria-label", "Remove one " + line.name);
+                    remove.addEventListener("click", function () {
+                        var quantity = line.quantity - 1;
+                        if (quantity < 1) {
+                            cart.delete(id);
+                        } else {
+                            line.quantity = quantity;
+                        }
+                        renderCart();
+                    });
+                    var count = document.createElement("strong");
+                    count.textContent = line.quantity;
+                    var add = document.createElement("button");
+                    add.type = "button";
+                    add.className = "circle";
+                    add.textContent = "+";
+                    add.setAttribute("aria-label", "Add one " + line.name);
+                    add.addEventListener("click", function () {
+                        line.quantity += 1;
+                        renderCart();
+                    });
+                    controls.appendChild(remove);
+                    controls.appendChild(count);
+                    controls.appendChild(add);
+                    row.appendChild(name);
+                    row.appendChild(controls);
+                    container.appendChild(row);
+                });
+                document.getElementById("order-total").textContent = money(totalCents / 100);
+                document.getElementById("submit-order").disabled = cart.size === 0;
+            }
+
+            function setGuests(value) {
+                guests = Math.max(1, Math.min(maxGuests, value));
+                document.getElementById("guest-count").value = guests;
+                document.getElementById("guest-count-label").textContent = guests;
+                document.getElementById("guest-minus").disabled = guests <= 1;
+                document.getElementById("guest-plus").disabled = guests >= maxGuests;
+            }
+
+            function showTracking(order) {
+                document.getElementById("tracking-card").hidden = false;
+                document.getElementById("tracking-title").textContent =
+                    "Order #" + String(order.id).padStart(4, "0") + " · " +
+                    order.status.charAt(0).toUpperCase() + order.status.slice(1);
+                var descriptions = {
+                    new: "Your order was sent directly to the kitchen.",
+                    preparing: "The kitchen is preparing your order.",
+                    ready: "Your order is ready; a waiter will bring it to your table.",
+                    served: "Your order has been served.",
+                    paid: "Payment is complete. Thank you!",
+                };
+                document.getElementById("tracking-description").textContent =
+                    descriptions[order.status] || "Order status updated.";
+                var list = document.getElementById("tracking-items");
+                list.textContent = "";
+                order.items.forEach(function (item) {
+                    var row = document.createElement("div");
+                    row.className = "status-line";
+                    var name = document.createElement("span");
+                    name.textContent = item.quantity + "× " + item.name;
+                    var status = document.createElement("strong");
+                    status.textContent = order.status.charAt(0).toUpperCase() + order.status.slice(1);
+                    row.appendChild(name);
+                    row.appendChild(status);
+                    list.appendChild(row);
+                });
+            }
+
+            async function refreshTracking() {
+                if (!currentOrderId || !trackingToken) {
+                    return;
+                }
+                try {
+                    var order = await readJson(
+                        await fetch(
+                            "../api/customer-order-status.php?orderId=" +
+                                encodeURIComponent(currentOrderId) +
+                                "&token=" +
+                                encodeURIComponent(trackingToken),
+                        ),
+                        "Could not refresh order status.",
+                    );
+                    showTracking(order);
+                } catch (error) {
+                    showMessage(error.message, false);
+                    if (pollTimer) {
+                        clearInterval(pollTimer);
+                    }
+                }
+            }
+
+            async function submitOrder() {
+                var button = document.getElementById("submit-order");
+                if (button.disabled || cart.size === 0) {
+                    return;
+                }
+                button.disabled = true;
+                showMessage("", true);
+                try {
+                    var result = await readJson(
+                        await fetch("../api/orders.php", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                tableToken: tableToken,
+                                guestCount: guests,
+                                note: document.getElementById("order-note").value.trim(),
+                                items: Array.from(cart.values()).map(function (line) {
+                                    return { itemId: line.itemId, quantity: line.quantity };
+                                }),
+                            }),
+                        }),
+                        "Your order could not be sent.",
+                    );
+                    currentOrderId = result.id;
+                    trackingToken = result.trackingToken;
+                    sessionStorage.setItem(trackingStorageKey, String(currentOrderId));
+                    sessionStorage.setItem(
+                        "lanay-order-tracking-" + currentOrderId,
+                        trackingToken,
+                    );
+                    cart.clear();
+                    document.getElementById("order-note").value = "";
+                    renderCart();
+                    showMessage("Order #" + result.id + " sent to the kitchen.", true);
+                    await refreshTracking();
+                    if (pollTimer) {
+                        clearInterval(pollTimer);
+                    }
+                    pollTimer = setInterval(refreshTracking, 10000);
+                } catch (error) {
+                    showMessage(error.message, false);
+                } finally {
+                    button.disabled = cart.size === 0;
+                }
+            }
+
+            async function loadCustomerMenu() {
+                if (!/^[a-f0-9]{64}$/.test(tableToken)) {
+                    throw new Error("This table link is invalid. Ask staff for a current QR code.");
+                }
+                var result = await readJson(
+                    await fetch("../api/customer-order.php?token=" + encodeURIComponent(tableToken)),
+                    "Could not load this table's menu.",
+                );
+                tableNumber = result.tableNumber;
+                maxGuests = result.seats;
+                items = result.items;
+                document.title = "Order at Table " + tableNumber + " | Lanay";
+                document.getElementById("table-chip").textContent = "Table " + tableNumber;
+                setGuests(1);
+                renderFilters();
+                renderMenu();
+                renderCart();
+
+                currentOrderId = Number(sessionStorage.getItem(trackingStorageKey)) || null;
+                if (currentOrderId) {
+                    trackingToken = sessionStorage.getItem("lanay-order-tracking-" + currentOrderId);
+                    if (trackingToken) {
+                        await refreshTracking();
+                        pollTimer = setInterval(refreshTracking, 10000);
+                    }
+                }
+            }
+
+            document.getElementById("guest-minus").addEventListener("click", function () {
+                setGuests(guests - 1);
+            });
+            document.getElementById("guest-plus").addEventListener("click", function () {
+                setGuests(guests + 1);
+            });
+            document.getElementById("submit-order").addEventListener("click", submitOrder);
+            loadCustomerMenu().catch(function (error) {
+                document.getElementById("table-chip").textContent = "Table link unavailable";
+                document.getElementById("guest-minus").disabled = true;
+                document.getElementById("guest-plus").disabled = true;
+                document.getElementById("menu-grid").textContent = error.message;
+                document.getElementById("submit-order").disabled = true;
+            });
+        </script>
+    </body>
+</html>

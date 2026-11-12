@@ -9,16 +9,91 @@
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Great+Vibes&display=swap"
         />
         <link rel="stylesheet" href="../assets/staff.css" />
+        <style>
+            .inventory-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+                gap: 18px;
+                align-items: start;
+            }
+            .inventory-table-scroll {
+                max-width: 100%;
+                overflow-x: auto;
+            }
+            .inventory-table-scroll .tbl {
+                min-width: 760px;
+            }
+            .inventory-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .inventory-actions .btn {
+                min-height: 40px;
+                padding: 0 12px;
+                font-size: 14px;
+            }
+            .inventory-feedback {
+                margin: 12px 0 0;
+                padding: 12px 14px;
+                border-radius: 14px;
+            }
+            .inventory-feedback:empty {
+                display: none;
+            }
+            .inventory-feedback.error {
+                background: #fbe5df;
+                color: #7a2a10;
+            }
+            .inventory-feedback.success {
+                background: #e2eee4;
+                color: #2d5a3a;
+            }
+            .recipe-list {
+                display: grid;
+                gap: 8px;
+                margin-top: 12px;
+            }
+            .recipe-row {
+                display: grid;
+                grid-template-columns: auto minmax(0, 1fr) minmax(100px, 140px);
+                align-items: center;
+                gap: 10px;
+                padding: 10px;
+                border: 1px solid #eceae4;
+                border-radius: 12px;
+            }
+            .recipe-row input[type="number"] {
+                min-height: 42px;
+                width: 100%;
+                border: 1px solid #dad8d1;
+                border-radius: 10px;
+                padding: 0 8px;
+                font: inherit;
+            }
+            .recipe-row input[type="checkbox"] {
+                width: 20px;
+                height: 20px;
+            }
+            @media (max-width: 480px) {
+                .recipe-row {
+                    grid-template-columns: auto minmax(0, 1fr);
+                }
+                .recipe-row input[type="number"] {
+                    grid-column: 2;
+                }
+            }
+        </style>
     </head>
     <body>
-        <div class="pg" style="min-height: 960px">
+        <div class="pg">
             <div class="bgart" aria-hidden="true">
                 <span class="b2"></span><span class="b3"></span><span class="ring"></span
                 ><span class="wave"></span
                 ><img class="wm" src="../../assets/images/logo.png" alt="" aria-hidden="true" />
             </div>
-            <div class="wr">
-                <div class="bar">
+            <main class="wr">
+                <header class="bar">
                     <img
                         class="lg"
                         src="../../assets/images/logo.png"
@@ -26,331 +101,540 @@
                         style="width: 56px; height: 56px"
                     />
                     <h1 class="h1">Inventory</h1>
-                    <span class="chip" style="background: #fff; margin-left: auto">Owner</span
-                    ><b>6:42 PM</b>
-                </div>
-                <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
-                    <div class="card" style="flex: 1 1 640px; padding: 18px">
-                        <div class="r" style="justify-content: space-between; margin-bottom: 8px">
-                            <p class="h2" style="margin: 0">Stock</p>
-                            <button
-                                class="btn pri"
-                                style="
-                                    min-height: 48px;
-                                    font-size: 15px;
-                                    padding: 0 18px;
-                                    min-height: 44px;
-                                "
-                            >
-                                Add stock
-                            </button>
+                    <span id="owner-name" class="chip" style="background: #fff; margin-left: auto"
+                        >Owner</span
+                    >
+                </header>
+                <section class="card">
+                    <div class="r" style="justify-content: space-between; flex-wrap: wrap">
+                        <div>
+                            <h2 class="h2" style="margin: 0">Ingredients</h2>
+                            <p style="margin: 6px 0 0; color: #5b5f63">
+                                Recipes reduce stock when an order is submitted. Low stock is shown below.
+                            </p>
                         </div>
+                        <button id="new-ingredient" class="btn pri" type="button">Add ingredient</button>
+                    </div>
+                    <div class="inventory-table-scroll" style="margin-top: 14px">
                         <table class="tbl">
                             <thead>
                                 <tr>
                                     <th>Ingredient</th>
                                     <th>In stock</th>
-                                    <th>Minimum</th>
-                                    <th>Level</th>
+                                    <th>Low-stock level</th>
                                     <th>Status</th>
-                                    <th>Expiry</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Salmon</td>
-                                    <td>1.5 kg</td>
-                                    <td>2 kg</td>
-                                    <td>
-                                        <div
-                                            style="
-                                                height: 10px;
-                                                border-radius: 9px;
-                                                background: #eceae4;
-                                                width: 120px;
-                                            "
-                                        >
-                                            <div
-                                                style="
-                                                    height: 10px;
-                                                    border-radius: 9px;
-                                                    background: #e07a5f;
-                                                    width: 55%;
-                                                "
-                                            ></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span
-                                            class="chip"
-                                            style="background: #fbdccf; color: #7a2a10"
-                                            >Low</span
-                                        >
-                                    </td>
-                                    <td>Use first: Nov 9</td>
-                                </tr>
-                                <tr>
-                                    <td>Nori sheets</td>
-                                    <td>40 pcs</td>
-                                    <td>50 pcs</td>
-                                    <td>
-                                        <div
-                                            style="
-                                                height: 10px;
-                                                border-radius: 9px;
-                                                background: #eceae4;
-                                                width: 120px;
-                                            "
-                                        >
-                                            <div
-                                                style="
-                                                    height: 10px;
-                                                    border-radius: 9px;
-                                                    background: #e9b949;
-                                                    width: 70%;
-                                                "
-                                            ></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span
-                                            class="chip"
-                                            style="background: #f8e7a6; color: #5a4300"
-                                            >Low</span
-                                        >
-                                    </td>
-                                    <td>Nov 30</td>
-                                </tr>
-                                <tr>
-                                    <td>Sushi rice</td>
-                                    <td>8 kg</td>
-                                    <td>3 kg</td>
-                                    <td>
-                                        <div
-                                            style="
-                                                height: 10px;
-                                                border-radius: 9px;
-                                                background: #eceae4;
-                                                width: 120px;
-                                            "
-                                        >
-                                            <div
-                                                style="
-                                                    height: 10px;
-                                                    border-radius: 9px;
-                                                    background: #6e9e78;
-                                                    width: 100%;
-                                                "
-                                            ></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span
-                                            class="chip"
-                                            style="background: #cfe3d3; color: #2d5a3a"
-                                            >OK</span
-                                        >
-                                    </td>
-                                    <td>Dec 12</td>
-                                </tr>
-                                <tr>
-                                    <td>Ebi (shrimp)</td>
-                                    <td>800 g</td>
-                                    <td>1 kg</td>
-                                    <td>
-                                        <div
-                                            style="
-                                                height: 10px;
-                                                border-radius: 9px;
-                                                background: #eceae4;
-                                                width: 120px;
-                                            "
-                                        >
-                                            <div
-                                                style="
-                                                    height: 10px;
-                                                    border-radius: 9px;
-                                                    background: #e9b949;
-                                                    width: 60%;
-                                                "
-                                            ></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span
-                                            class="chip"
-                                            style="background: #f8e7a6; color: #5a4300"
-                                            >Low</span
-                                        >
-                                    </td>
-                                    <td>Use first: Nov 8</td>
-                                </tr>
-                                <tr>
-                                    <td>Chicken</td>
-                                    <td>4 kg</td>
-                                    <td>2 kg</td>
-                                    <td>
-                                        <div
-                                            style="
-                                                height: 10px;
-                                                border-radius: 9px;
-                                                background: #eceae4;
-                                                width: 120px;
-                                            "
-                                        >
-                                            <div
-                                                style="
-                                                    height: 10px;
-                                                    border-radius: 9px;
-                                                    background: #6e9e78;
-                                                    width: 100%;
-                                                "
-                                            ></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span
-                                            class="chip"
-                                            style="background: #cfe3d3; color: #2d5a3a"
-                                            >OK</span
-                                        >
-                                    </td>
-                                    <td>Nov 11</td>
-                                </tr>
+                            <tbody id="ingredient-list">
+                                <tr><td colspan="5">Loading inventory…</td></tr>
                             </tbody>
                         </table>
-                        <p style="margin: 14px 12px 0; font-size: 13px; color: #5b5f63">
-                            Sample data. Items closest to expiring are marked "Use first".
-                        </p>
                     </div>
-                    <aside class="card" style="flex: 0 1 360px; min-width: 300px">
-                        <p class="h2" style="margin: 0 0 4px">Buy tomorrow</p>
-                        <p style="margin: 0 0 14px; color: #5b5f63; font-size: 14px">
-                            Based on the last 7 days of orders.
-                        </p>
-                        <div
-                            style="
-                                display: flex;
-                                flex-direction: column;
-                                gap: 14px;
-                                font-size: 16px;
-                            "
-                        >
-                            <div class="ln"><span>Salmon</span><b>3 kg</b></div>
-                            <div class="ln"><span>Nori sheets</span><b>100 pcs</b></div>
-                            <div class="ln"><span>Ebi (shrimp)</span><b>2 kg</b></div>
-                        </div>
-                        <div style="margin-top: 20px">
-                            <button
-                                class="btn pri"
-                                style="
-                                    min-height: 48px;
-                                    font-size: 15px;
-                                    padding: 0 18px;
-                                    width: 100%;
-                                    min-height: 56px;
-                                "
-                            >
-                                Print purchase list
+                    <p id="inventory-feedback" class="inventory-feedback" role="status" aria-live="polite"></p>
+                </section>
+
+                <div class="inventory-grid" style="margin-top: 18px">
+                    <section class="card">
+                        <h2 id="ingredient-form-title" class="h2">Add ingredient</h2>
+                        <form id="ingredient-form">
+                            <input id="ingredient-id" type="hidden" />
+                            <label class="lbl" for="ingredient-name">Name</label>
+                            <input id="ingredient-name" class="inp" maxlength="120" required />
+                            <label class="lbl" for="ingredient-unit">Unit</label>
+                            <select id="ingredient-unit" class="inp" required>
+                                <option value="g">Grams (g)</option>
+                                <option value="ml">Milliliters (mL)</option>
+                                <option value="each">Each (count)</option>
+                            </select>
+                            <div id="opening-stock-field">
+                                <label class="lbl" for="opening-stock">Opening stock</label>
+                                <input
+                                    id="opening-stock"
+                                    class="inp"
+                                    type="number"
+                                    min="0"
+                                    step="0.001"
+                                    value="0"
+                                    required
+                                />
+                            </div>
+                            <label class="lbl" for="low-stock-threshold">Low-stock warning at</label>
+                            <input
+                                id="low-stock-threshold"
+                                class="inp"
+                                type="number"
+                                min="0"
+                                step="0.001"
+                                value="0"
+                                required
+                            />
+                            <div class="r" style="margin-top: 16px">
+                                <button id="save-ingredient" class="btn pri" type="submit">
+                                    Save ingredient
+                                </button>
+                                <button id="cancel-ingredient" class="btn sec" type="button" hidden>
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <section class="card">
+                        <h2 class="h2">Receive or adjust stock</h2>
+                        <form id="movement-form">
+                            <label class="lbl" for="movement-ingredient">Ingredient</label>
+                            <select id="movement-ingredient" class="inp" required></select>
+                            <label class="lbl" for="movement-type">Change type</label>
+                            <select id="movement-type" class="inp" required>
+                                <option value="restock">Receive stock</option>
+                                <option value="adjust">Adjust stock</option>
+                            </select>
+                            <label class="lbl" for="movement-quantity">Quantity</label>
+                            <input
+                                id="movement-quantity"
+                                class="inp"
+                                type="number"
+                                step="0.001"
+                                required
+                            />
+                            <p id="movement-help" class="field-help">
+                                Enter a positive amount received.
+                            </p>
+                            <label class="lbl" for="movement-note">Reason or supplier</label>
+                            <input id="movement-note" class="inp" maxlength="255" />
+                            <button class="btn pri" type="submit" style="width: 100%; margin-top: 16px">
+                                Save stock change
                             </button>
-                        </div>
-                    </aside>
+                        </form>
+                    </section>
                 </div>
-                <nav class="tabs">
-                    <a class="tab" href="../owner/reports.html"
-                        ><svg
-                            width="22"
-                            height="22"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            aria-hidden="true"
-                        >
-                            <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></svg
-                        >Reports</a
-                    ><a class="tab" href="../cashier/orders.html"
-                        ><svg
-                            width="22"
-                            height="22"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            aria-hidden="true"
-                        >
-                            <path d="M6 3h12v18l-3-2-3 2-3-2-3 2z" />
-                            <path d="M9 8h6M9 12h6" /></svg
-                        >Orders</a
-                    ><a class="tab" href="../owner/menu-manager.html"
-                        ><svg
-                            width="22"
-                            height="22"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            aria-hidden="true"
-                        >
-                            <path d="M4 6h16M4 12h16M4 18h10" /></svg
-                        >Menu</a
-                    ><a class="tab on" href="../owner/inventory.html"
-                        ><svg
-                            width="22"
-                            height="22"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            aria-hidden="true"
-                        >
-                            <path d="M3 8l9-5 9 5v8l-9 5-9-5z" />
-                            <path d="M3 8l9 5 9-5M12 13v8" /></svg
-                        >Inventory</a
-                    ><a class="tab" href="../owner/delivery.html"
-                        ><svg
-                            width="22"
-                            height="22"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            aria-hidden="true"
-                        >
-                            <circle cx="6" cy="17" r="3" />
-                            <circle cx="18" cy="17" r="3" />
-                            <path d="M9 17h6l-3-8H9M15 9h3l1 5" /></svg
-                        >Delivery</a
-                    ><a class="tab" href="../owner/staff.html"
-                        ><svg
-                            width="22"
-                            height="22"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            aria-hidden="true"
-                        >
-                            <circle cx="9" cy="8" r="3.5" />
-                            <path
-                                d="M2 20c0-4 3-6 7-6s7 2 7 6M17 5a3.5 3.5 0 0 1 0 7M22 20c0-3-2-5-4-5.5"
-                            /></svg
-                        >Staff</a
-                    >
+
+                <section class="card" style="margin-top: 18px">
+                    <h2 class="h2">Menu recipes</h2>
+                    <p style="margin-top: -6px; color: #5b5f63">
+                        Select the ingredient quantity used for one menu portion. Items without a recipe
+                        continue to use their menu portion limits only.
+                    </p>
+                    <form id="recipe-form">
+                        <label class="lbl" for="recipe-menu-item">Menu item</label>
+                        <select id="recipe-menu-item" class="inp" required></select>
+                        <div id="recipe-ingredients" class="recipe-list"></div>
+                        <button id="save-recipe" class="btn pri" type="submit" style="margin-top: 16px">
+                            Save recipe
+                        </button>
+                    </form>
+                </section>
+
+                <section class="card" style="margin-top: 18px">
+                    <h2 class="h2">Recent stock movements</h2>
+                    <div class="inventory-table-scroll">
+                        <table class="tbl">
+                            <thead>
+                                <tr>
+                                    <th>When</th>
+                                    <th>Ingredient</th>
+                                    <th>Change</th>
+                                    <th>Reason</th>
+                                    <th>Recorded by</th>
+                                </tr>
+                            </thead>
+                            <tbody id="movement-list">
+                                <tr><td colspan="5">Loading movements…</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <nav class="tabs" aria-label="Owner navigation">
+                    <a class="tab" href="reports.html">Reports</a>
+                    <a class="tab" href="../cashier/orders.html">Orders</a>
+                    <a class="tab" href="menu-manager.html">Menu</a>
+                    <a class="tab on" href="inventory.html" aria-current="page">Inventory</a>
+                    <a class="tab" href="staff.html">Staff</a>
+                    <a class="tab" href="qr-orders.html">Table QR</a>
                 </nav>
-            </div>
+            </main>
         </div>
+        <script>
+            var csrfToken = "";
+            var ingredients = [];
+            var menuItems = [];
+            var ingredientList = document.getElementById("ingredient-list");
+            var movementList = document.getElementById("movement-list");
+            var feedback = document.getElementById("inventory-feedback");
+
+            function showFeedback(message, success) {
+                feedback.textContent = message;
+                feedback.className =
+                    "inventory-feedback " + (success ? "success" : "error");
+            }
+
+            async function readJson(response, message) {
+                var result;
+                try {
+                    result = await response.json();
+                } catch (error) {
+                    throw new Error(message);
+                }
+                if (!response.ok) {
+                    throw new Error(result.error || message);
+                }
+                return result;
+            }
+
+            async function postInventory(body) {
+                return readJson(
+                    await fetch("../../api/inventory.php", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-Token": csrfToken,
+                        },
+                        body: JSON.stringify(body),
+                    }),
+                    "Inventory change could not be saved.",
+                );
+            }
+
+            function addCell(row, value) {
+                var cell = document.createElement("td");
+                cell.textContent = value;
+                row.appendChild(cell);
+                return cell;
+            }
+
+            function renderIngredients() {
+                ingredientList.textContent = "";
+                var activeIngredients = ingredients.filter(function (ingredient) {
+                    return ingredient.active;
+                });
+                if (!activeIngredients.length) {
+                    var empty = document.createElement("tr");
+                    var cell = addCell(empty, "No ingredients yet. Add one to start tracking stock.");
+                    cell.colSpan = 5;
+                    ingredientList.appendChild(empty);
+                }
+                activeIngredients.forEach(function (ingredient) {
+                    var row = document.createElement("tr");
+                    addCell(row, ingredient.name);
+                    addCell(row, ingredient.stock + " " + ingredient.unit);
+                    addCell(row, ingredient.lowStockThreshold + " " + ingredient.unit);
+                    var statusCell = addCell(row, "");
+                    var badge = document.createElement("span");
+                    badge.className = "chip " + (ingredient.lowStock ? "account-inactive" : "account-active");
+                    badge.textContent = ingredient.lowStock ? "Low stock" : "In stock";
+                    statusCell.appendChild(badge);
+
+                    var actionsCell = document.createElement("td");
+                    var actions = document.createElement("div");
+                    actions.className = "inventory-actions";
+                    var edit = document.createElement("button");
+                    edit.type = "button";
+                    edit.className = "btn sec";
+                    edit.textContent = "Edit";
+                    edit.addEventListener("click", function () {
+                        editIngredient(ingredient);
+                    });
+                    var restock = document.createElement("button");
+                    restock.type = "button";
+                    restock.className = "btn sec";
+                    restock.textContent = "Change stock";
+                    restock.addEventListener("click", function () {
+                        document.getElementById("movement-ingredient").value = ingredient.id;
+                        document.getElementById("movement-quantity").focus();
+                    });
+                    var archive = document.createElement("button");
+                    archive.type = "button";
+                    archive.className = "btn sec";
+                    archive.textContent = "Archive";
+                    archive.addEventListener("click", async function () {
+                        var hasRecipe = menuItems.some(function (item) {
+                            return item.recipe.some(function (line) {
+                                return line.ingredientId === ingredient.id;
+                            });
+                        });
+                        var warning = hasRecipe
+                            ? " This will make menu items using it unavailable until their recipes are updated."
+                            : "";
+                        if (!window.confirm("Archive " + ingredient.name + "?" + warning)) {
+                            return;
+                        }
+                        try {
+                            await postInventory({ action: "archiveIngredient", id: ingredient.id });
+                            await loadInventory();
+                            showFeedback("Ingredient archived.", true);
+                        } catch (error) {
+                            showFeedback(error.message, false);
+                        }
+                    });
+                    actions.appendChild(edit);
+                    actions.appendChild(restock);
+                    actions.appendChild(archive);
+                    actionsCell.appendChild(actions);
+                    row.appendChild(actionsCell);
+                    ingredientList.appendChild(row);
+                });
+                renderIngredientSelects();
+                renderRecipeForm();
+            }
+
+            function renderIngredientSelects() {
+                var activeIngredients = ingredients.filter(function (ingredient) {
+                    return ingredient.active;
+                });
+                var select = document.getElementById("movement-ingredient");
+                select.textContent = "";
+                activeIngredients.forEach(function (ingredient) {
+                    var option = document.createElement("option");
+                    option.value = ingredient.id;
+                    option.textContent = ingredient.name + " (" + ingredient.unit + ")";
+                    select.appendChild(option);
+                });
+                document.getElementById("movement-form").querySelector("button[type=submit]").disabled =
+                    activeIngredients.length === 0;
+            }
+
+            function renderRecipeForm() {
+                var select = document.getElementById("recipe-menu-item");
+                var previous = select.value;
+                select.textContent = "";
+                menuItems.filter(function (item) { return item.active; }).forEach(function (item) {
+                    var option = document.createElement("option");
+                    option.value = item.id;
+                    option.textContent = item.name;
+                    select.appendChild(option);
+                });
+                if (menuItems.some(function (item) { return String(item.id) === previous && item.active; })) {
+                    select.value = previous;
+                }
+                document.getElementById("save-recipe").disabled = select.options.length === 0;
+                drawRecipeIngredients();
+            }
+
+            function drawRecipeIngredients() {
+                var container = document.getElementById("recipe-ingredients");
+                container.textContent = "";
+                var item = menuItems.find(function (entry) {
+                    return entry.id === Number(document.getElementById("recipe-menu-item").value);
+                });
+                if (!item) {
+                    container.textContent = "Add an active menu item and ingredient to define a recipe.";
+                    return;
+                }
+                var activeIngredients = ingredients.filter(function (ingredient) {
+                    return ingredient.active;
+                });
+                if (!activeIngredients.length) {
+                    container.textContent = "Add ingredients before defining a recipe.";
+                    return;
+                }
+                var current = new Map(
+                    item.recipe.map(function (line) {
+                        return [line.ingredientId, line.quantityPerPortion];
+                    }),
+                );
+                activeIngredients.forEach(function (ingredient) {
+                    var row = document.createElement("label");
+                    row.className = "recipe-row";
+                    var checkbox = document.createElement("input");
+                    checkbox.type = "checkbox";
+                    checkbox.checked = current.has(ingredient.id);
+                    checkbox.setAttribute("aria-label", "Use " + ingredient.name);
+                    var name = document.createElement("span");
+                    name.textContent = ingredient.name + " (" + ingredient.unit + ")";
+                    var quantity = document.createElement("input");
+                    quantity.type = "number";
+                    quantity.min = "0.001";
+                    quantity.step = "0.001";
+                    quantity.max = "999999999.999";
+                    quantity.value = current.get(ingredient.id) || "";
+                    quantity.disabled = !checkbox.checked;
+                    quantity.setAttribute(
+                        "aria-label",
+                        ingredient.name + " quantity per portion in " + ingredient.unit,
+                    );
+                    checkbox.addEventListener("change", function () {
+                        quantity.disabled = !checkbox.checked;
+                        if (checkbox.checked && !quantity.value) {
+                            quantity.value = "1";
+                        }
+                    });
+                    row.appendChild(checkbox);
+                    row.appendChild(name);
+                    row.appendChild(quantity);
+                    row.dataset.ingredientId = ingredient.id;
+                    container.appendChild(row);
+                });
+            }
+
+            function editIngredient(ingredient) {
+                document.getElementById("ingredient-id").value = ingredient.id;
+                document.getElementById("ingredient-name").value = ingredient.name;
+                document.getElementById("ingredient-unit").value = ingredient.unit;
+                document.getElementById("opening-stock").disabled = true;
+                document.getElementById("opening-stock-field").hidden = true;
+                document.getElementById("low-stock-threshold").value =
+                    ingredient.lowStockThreshold;
+                document.getElementById("ingredient-form-title").textContent = "Edit ingredient";
+                document.getElementById("save-ingredient").textContent = "Save changes";
+                document.getElementById("cancel-ingredient").hidden = false;
+                document.getElementById("ingredient-name").focus();
+            }
+
+            function resetIngredientForm() {
+                document.getElementById("ingredient-form").reset();
+                document.getElementById("ingredient-id").value = "";
+                document.getElementById("opening-stock").disabled = false;
+                document.getElementById("opening-stock-field").hidden = false;
+                document.getElementById("ingredient-form-title").textContent = "Add ingredient";
+                document.getElementById("save-ingredient").textContent = "Save ingredient";
+                document.getElementById("cancel-ingredient").hidden = true;
+            }
+
+            function renderMovements(movements) {
+                movementList.textContent = "";
+                if (!movements.length) {
+                    var row = document.createElement("tr");
+                    var cell = addCell(row, "No stock movements yet.");
+                    cell.colSpan = 5;
+                    movementList.appendChild(row);
+                    return;
+                }
+                movements.forEach(function (movement) {
+                    var row = document.createElement("tr");
+                    var date = new Date(String(movement.createdAt).replace(" ", "T"));
+                    addCell(row, Number.isNaN(date.getTime()) ? movement.createdAt : date.toLocaleString());
+                    addCell(row, movement.ingredientName);
+                    addCell(
+                        row,
+                        movement.quantityChange +
+                            " " +
+                            (ingredients.find(function (item) {
+                                return item.id === movement.ingredientId;
+                            }) || { unit: "" }).unit,
+                    );
+                    addCell(row, movement.orderId ? "Order #" + movement.orderId : movement.note);
+                    addCell(row, movement.staffName || "System");
+                    movementList.appendChild(row);
+                });
+            }
+
+            async function loadInventory() {
+                var sessionResponse = await fetch("../../api/auth/session.php");
+                if (sessionResponse.status === 401) {
+                    window.location.replace("../../core/login.html");
+                    return false;
+                }
+                var session = await readJson(sessionResponse, "Could not verify the owner session.");
+                if (session.staff.role !== "owner") {
+                    throw new Error("Only an owner can manage inventory.");
+                }
+                csrfToken = session.csrfToken;
+                document.getElementById("owner-name").textContent = session.staff.name;
+                var result = await readJson(
+                    await fetch("../../api/inventory.php"),
+                    "Could not load ingredient inventory.",
+                );
+                ingredients = result.ingredients;
+                menuItems = result.menuItems;
+                renderIngredients();
+                renderMovements(result.movements);
+                return true;
+            }
+
+            document.getElementById("new-ingredient").addEventListener("click", function () {
+                resetIngredientForm();
+                document.getElementById("ingredient-name").focus();
+            });
+            document.getElementById("cancel-ingredient").addEventListener("click", resetIngredientForm);
+            document.getElementById("ingredient-form").addEventListener("submit", async function (event) {
+                event.preventDefault();
+                var id = document.getElementById("ingredient-id").value;
+                var body = {
+                    action: "saveIngredient",
+                    name: document.getElementById("ingredient-name").value.trim(),
+                    unit: document.getElementById("ingredient-unit").value,
+                    lowStockThreshold: document.getElementById("low-stock-threshold").value,
+                };
+                if (id) {
+                    body.id = Number(id);
+                } else {
+                    body.initialStock = document.getElementById("opening-stock").value;
+                }
+                try {
+                    await postInventory(body);
+                    resetIngredientForm();
+                    await loadInventory();
+                    showFeedback(id ? "Ingredient updated." : "Ingredient added.", true);
+                } catch (error) {
+                    showFeedback(error.message, false);
+                }
+            });
+
+            document.getElementById("movement-type").addEventListener("change", function () {
+                document.getElementById("movement-help").textContent =
+                    this.value === "restock"
+                        ? "Enter a positive amount received."
+                        : "Use a positive or negative adjustment; stock cannot go below zero.";
+                var quantity = document.getElementById("movement-quantity");
+                quantity.min = this.value === "restock" ? "0.001" : "-999999999.999";
+            });
+            document.getElementById("movement-form").addEventListener("submit", async function (event) {
+                event.preventDefault();
+                var action = document.getElementById("movement-type").value;
+                var body = {
+                    action: action,
+                    id: Number(document.getElementById("movement-ingredient").value),
+                    note: document.getElementById("movement-note").value.trim(),
+                };
+                body[action === "restock" ? "quantity" : "change"] =
+                    document.getElementById("movement-quantity").value;
+                try {
+                    await postInventory(body);
+                    this.reset();
+                    document.getElementById("movement-type").dispatchEvent(new Event("change"));
+                    await loadInventory();
+                    showFeedback("Stock change recorded.", true);
+                } catch (error) {
+                    showFeedback(error.message, false);
+                }
+            });
+
+            document.getElementById("recipe-menu-item").addEventListener("change", drawRecipeIngredients);
+            document.getElementById("recipe-form").addEventListener("submit", async function (event) {
+                event.preventDefault();
+                var lines = [];
+                document.querySelectorAll(".recipe-row").forEach(function (row) {
+                    var checkbox = row.querySelector('input[type="checkbox"]');
+                    if (checkbox.checked) {
+                        lines.push({
+                            ingredientId: Number(row.dataset.ingredientId),
+                            quantityPerPortion: row.querySelector('input[type="number"]').value,
+                        });
+                    }
+                });
+                try {
+                    await postInventory({
+                        action: "saveRecipe",
+                        menuItemId: Number(document.getElementById("recipe-menu-item").value),
+                        ingredients: lines,
+                    });
+                    await loadInventory();
+                    showFeedback("Recipe saved.", true);
+                } catch (error) {
+                    showFeedback(error.message, false);
+                }
+            });
+
+            loadInventory().catch(function (error) {
+                ingredientList.textContent = "";
+                var row = document.createElement("tr");
+                var cell = addCell(row, "Inventory could not be loaded.");
+                cell.colSpan = 5;
+                ingredientList.appendChild(row);
+                showFeedback(error.message, false);
+            });
+        </script>
     </body>
 </html>

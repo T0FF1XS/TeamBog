@@ -54,13 +54,15 @@
                 <img class="logo" src="../assets/images/logo.png" alt="Lanay Restaurant" />
                 <h1 class="page-title m-0">Kitchen</h1>
                 <span
+                    id="staff-name"
                     class="badge rounded-pill bg-white text-dark fs-6 fw-semibold ms-auto px-3 py-2"
                     >Kitchen 1</span
                 >
-                <a class="btn btn-outline-dark btn-sm" href="login.html">Sign out</a>
+                <a class="btn btn-outline-dark btn-sm" href="login.html" id="sign-out">Sign out</a>
             </header>
 
-            <div class="row g-4">
+            <div class="alert d-none" id="kitchen-feedback" role="status" aria-live="polite"></div>
+            <div class="row g-4 d-none" id="kitchen-board" aria-live="polite">
                 <div class="col-lg-4">
                     <h2 class="h5 mb-3">New, 1</h2>
 
@@ -216,38 +218,180 @@
             </div>
 
             <script>
-                var started = Date.now();
+                var csrfToken = "";
+                var loadingOrders = false;
+                var board = document.getElementById("kitchen-board");
+                var feedback = document.getElementById("kitchen-feedback");
 
-                function pad(number) {
-                    return String(number).padStart(2, "0");
+                function showKitchenFeedback(message, success) {
+                    feedback.textContent = message;
+                    feedback.className = "alert " + (success ? "alert-success" : "alert-danger");
                 }
 
-                function tick() {
-                    var extra = (Date.now() - started) / 1000;
-                    var tickets = document.querySelectorAll(".ticket");
+                function renderOrders(groups) {
+                    board.textContent = "";
+                    var columns = [
+                        { status: "new", title: "New" },
+                        { status: "preparing", title: "Preparing" },
+                        { status: "ready", title: "Ready" },
+                    ];
+                    columns.forEach(function (column) {
+                        var section = document.createElement("section");
+                        section.className = "col-lg-4";
+                        var heading = document.createElement("h2");
+                        heading.className = "h5 mb-3";
+                        heading.textContent = column.title + ", " + groups[column.status].length;
+                        section.appendChild(heading);
 
-                    for (var i = 0; i < tickets.length; i++) {
-                        var secs = parseInt(tickets[i].dataset.secs) + extra;
-                        var minutes = secs / 60;
-                        var tone = minutes < 10 ? "ok" : minutes < 20 ? "warn" : "late";
-                        var label = minutes < 10 ? "On time" : minutes < 20 ? "Hurry" : "Late";
-                        var color = minutes < 10 ? "#6E9E78" : minutes < 20 ? "#E9B949" : "#E07A5F";
+                        if (groups[column.status].length === 0) {
+                            var empty = document.createElement("p");
+                            empty.className = "text-secondary";
+                            empty.textContent = "No orders.";
+                            section.appendChild(empty);
+                        }
 
-                        tickets[i].querySelector(".timer-time").textContent =
-                            pad(Math.floor(secs / 60)) + ":" + pad(Math.floor(secs % 60));
-                        tickets[i].querySelector(".ring-timer").style.background =
-                            "conic-gradient(" +
-                            color +
-                            " " +
-                            Math.min(secs / 12, 100) +
-                            "%, #ECEAE4 0)";
-                        tickets[i].querySelector(".timer-label").className =
-                            "badge rounded-pill badge-" + tone + " px-3 py-2 mt-1 timer-label";
-                        tickets[i].querySelector(".timer-label").textContent = label;
+                        groups[column.status].forEach(function (order) {
+                            var card = document.createElement("article");
+                            card.className = "card p-3 mb-3";
+                            var header = document.createElement("div");
+                            header.className = "d-flex justify-content-between align-items-center mb-2";
+                            var table = document.createElement("div");
+                            var tableName = document.createElement("b");
+                            tableName.className = "fs-4 d-block";
+                            tableName.textContent = "Table " + order.tableNumber;
+                            var orderLabel = document.createElement("span");
+                            orderLabel.className = "text-secondary small";
+                            orderLabel.textContent = "Order #" + order.id + " · " + order.guests + " guests";
+                            table.appendChild(tableName);
+                            table.appendChild(orderLabel);
+                            var status = document.createElement("span");
+                            status.className =
+                                "badge rounded-pill px-3 py-2 " +
+                                (column.status === "ready" ? "badge-ok" : "badge-warn");
+                            status.textContent = column.title;
+                            header.appendChild(table);
+                            header.appendChild(status);
+                            card.appendChild(header);
+
+                            var lines = document.createElement("div");
+                            lines.className = "fs-5 mb-2";
+                            order.items.forEach(function (item) {
+                                var line = document.createElement("div");
+                                line.textContent = item.quantity + "× " + item.name;
+                                lines.appendChild(line);
+                            });
+                            card.appendChild(lines);
+
+                            if (order.kitchen_note) {
+                                var note = document.createElement("span");
+                                note.className =
+                                    "badge rounded-pill badge-warn align-self-start px-3 py-2 mb-2";
+                                note.textContent = order.kitchen_note;
+                                card.appendChild(note);
+                            }
+
+                            var action = document.createElement("button");
+                            action.type = "button";
+                            action.className = "btn btn-primary btn-lg w-100";
+                            action.textContent =
+                                column.status === "new"
+                                    ? "Start cooking"
+                                    : column.status === "preparing"
+                                      ? "Mark ready"
+                                      : "Waiting for waiter";
+                            action.disabled = column.status === "ready";
+                            if (!action.disabled) {
+                                action.addEventListener("click", function () {
+                                    updateOrder(order.id, column.status === "new" ? "start" : "ready");
+                                });
+                            }
+                            card.appendChild(action);
+                            section.appendChild(card);
+                        });
+                        board.appendChild(section);
+                    });
+                    board.classList.remove("d-none");
+                }
+
+                async function loadOrders() {
+                    if (loadingOrders) {
+                        return;
+                    }
+                    loadingOrders = true;
+                    try {
+                        var sessionResponse = await fetch("../api/auth/session.php");
+                        if (sessionResponse.status === 401) {
+                            window.location.replace("login.html");
+                            return;
+                        }
+                        var session = await sessionResponse.json();
+                        if (!sessionResponse.ok) {
+                            throw new Error(session.error || "Could not verify your session.");
+                        }
+                        if (session.staff.role !== "kitchen" && session.staff.role !== "owner") {
+                            throw new Error("Only kitchen staff can access kitchen tickets.");
+                        }
+                        csrfToken = session.csrfToken;
+                        document.getElementById("staff-name").textContent = session.staff.name;
+
+                        var groups = { new: [], preparing: [], ready: [] };
+                        for (var status of Object.keys(groups)) {
+                            var response = await fetch("../api/orders.php?status=" + status);
+                            var result = await response.json();
+                            if (!response.ok) {
+                                throw new Error(result.error || "Could not load kitchen tickets.");
+                            }
+                            groups[status] = result.orders;
+                        }
+                        renderOrders(groups);
+                        feedback.classList.add("d-none");
+                    } catch (error) {
+                        showKitchenFeedback(error.message, false);
+                        board.classList.remove("d-none");
+                    } finally {
+                        loadingOrders = false;
                     }
                 }
 
-                setInterval(tick, 1000);
+                async function updateOrder(orderId, action) {
+                    try {
+                        var response = await fetch("../api/orders/status.php", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRF-Token": csrfToken,
+                            },
+                            body: JSON.stringify({ orderId: orderId, action: action }),
+                        });
+                        var result = await response.json();
+                        if (!response.ok) {
+                            throw new Error(result.error || "Order could not be updated.");
+                        }
+                        showKitchenFeedback("Order #" + orderId + " updated.", true);
+                        await loadOrders();
+                    } catch (error) {
+                        showKitchenFeedback(error.message, false);
+                    }
+                }
+
+                document.getElementById("sign-out").addEventListener("click", async function (event) {
+                    event.preventDefault();
+                    try {
+                        var response = await fetch("../api/auth/logout.php", {
+                            method: "POST",
+                            headers: { "X-CSRF-Token": csrfToken },
+                        });
+                        if (!response.ok) {
+                            throw new Error("Sign out failed. Refresh and try again.");
+                        }
+                        window.location.href = "login.html";
+                    } catch (error) {
+                        showKitchenFeedback(error.message, false);
+                    }
+                });
+
+                loadOrders();
+                window.setInterval(loadOrders, 15000);
             </script>
         </main>
 

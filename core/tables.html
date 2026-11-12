@@ -54,10 +54,11 @@
                 <img class="logo" src="../assets/images/logo.png" alt="Lanay Restaurant" />
                 <h1 class="page-title m-0">Tables</h1>
                 <span
+                    id="staff-name"
                     class="badge rounded-pill bg-white text-dark fs-6 fw-semibold ms-auto px-3 py-2"
                     >Waiter 1</span
                 >
-                <a class="btn btn-outline-dark btn-sm" href="login.html">Sign out</a>
+                <a class="btn btn-outline-dark btn-sm" href="login.html" id="sign-out">Sign out</a>
             </header>
 
             <div class="d-flex flex-wrap gap-2 mb-3">
@@ -67,10 +68,11 @@
                 <span class="badge rounded-pill badge-warn fs-6 px-3 py-2">Ordering</span>
                 <span class="badge rounded-pill badge-ok fs-6 px-3 py-2">Eating</span>
             </div>
+            <div class="alert d-none" id="table-feedback" role="status" aria-live="polite"></div>
 
             <div class="row g-3">
                 <div class="col-6 col-md-4 col-lg-3">
-                    <a class="tile tile-eating" href="order.html">
+                    <a class="tile tile-eating" href="order.html?table_no=1">
                         <svg
                             class="seats"
                             width="52"
@@ -110,7 +112,7 @@
                     </a>
                 </div>
                 <div class="col-6 col-md-4 col-lg-3">
-                    <a class="tile tile-eating" href="order.html">
+                    <a class="tile tile-eating" href="order.html?table_no=2">
                         <svg
                             class="seats"
                             width="52"
@@ -158,7 +160,7 @@
                     </a>
                 </div>
                 <div class="col-6 col-md-4 col-lg-3">
-                    <a class="tile tile-free" href="order.html">
+                    <a class="tile tile-free" href="order.html?table_no=3">
                         <svg
                             class="seats"
                             width="52"
@@ -222,7 +224,7 @@
                     </a>
                 </div>
                 <div class="col-6 col-md-4 col-lg-3">
-                    <a class="tile tile-ordering" href="order.html">
+                    <a class="tile tile-ordering" href="order.html?table_no=4">
                         <svg
                             class="seats"
                             width="52"
@@ -254,7 +256,7 @@
                     </a>
                 </div>
                 <div class="col-6 col-md-4 col-lg-3">
-                    <a class="tile tile-free" href="order.html">
+                    <a class="tile tile-free" href="order.html?table_no=5">
                         <svg
                             class="seats"
                             width="52"
@@ -318,7 +320,7 @@
                     </a>
                 </div>
                 <div class="col-6 col-md-4 col-lg-3">
-                    <a class="tile tile-ordering" href="order.html">
+                    <a class="tile tile-ordering" href="order.html?table_no=6">
                         <svg
                             class="seats"
                             width="52"
@@ -358,7 +360,7 @@
                     </a>
                 </div>
                 <div class="col-6 col-md-4 col-lg-3">
-                    <a class="tile tile-free" href="order.html">
+                    <a class="tile tile-free" href="order.html?table_no=7">
                         <svg
                             class="seats"
                             width="52"
@@ -422,7 +424,7 @@
                     </a>
                 </div>
                 <div class="col-6 col-md-4 col-lg-3">
-                    <a class="tile tile-eating" href="order.html">
+                    <a class="tile tile-eating" href="order.html?table_no=8">
                         <svg
                             class="seats"
                             width="52"
@@ -470,7 +472,7 @@
                     </a>
                 </div>
                 <div class="col-6 col-md-4 col-lg-3">
-                    <a class="tile tile-ordering" href="order.html">
+                    <a class="tile tile-ordering" href="order.html?table_no=9">
                         <svg
                             class="seats"
                             width="52"
@@ -510,7 +512,7 @@
                     </a>
                 </div>
                 <div class="col-6 col-md-4 col-lg-3">
-                    <a class="tile tile-free" href="order.html">
+                    <a class="tile tile-free" href="order.html?table_no=10">
                         <svg
                             class="seats"
                             width="52"
@@ -574,7 +576,154 @@
                     </a>
                 </div>
             </div>
+            <section class="card p-3 mt-4" aria-labelledby="ready-title">
+                <h2 class="h5" id="ready-title">Ready to serve</h2>
+                <div class="row g-3" id="ready-orders"></div>
+                <p class="text-secondary mb-0 d-none" id="ready-empty">No orders are ready.</p>
+            </section>
         </main>
+
+        <script>
+            var csrfToken = "";
+
+            async function loadTables() {
+                try {
+                    var sessionResponse = await fetch("../api/auth/session.php");
+                    if (sessionResponse.status === 401) {
+                        window.location.replace("login.html");
+                        return;
+                    }
+                    var session = await sessionResponse.json();
+                    if (!sessionResponse.ok) {
+                        throw new Error(session.error || "Could not verify your session.");
+                    }
+                    if (session.staff.role !== "waiter" && session.staff.role !== "owner") {
+                        throw new Error("Your role cannot view waiter tables.");
+                    }
+                    csrfToken = session.csrfToken;
+                    document.getElementById("staff-name").textContent = session.staff.name;
+
+                    var response = await fetch("../api/tables.php");
+                    var result = await response.json();
+                    if (!response.ok) {
+                        throw new Error(result.error || "Could not load tables.");
+                    }
+
+                    result.tables.forEach(function (table) {
+                        var tile = document.querySelector(
+                            'a.tile[href="order.html?table_no=' + table.number + '"]',
+                        );
+                        if (!tile) {
+                            return;
+                        }
+                        tile.classList.remove("tile-free", "tile-ordering", "tile-eating");
+                        tile.classList.add("tile-" + table.status);
+                        var guestLabel = tile.querySelector(".small");
+                        guestLabel.textContent =
+                            table.status === "free" ? "Available" : table.guests + " guests";
+                        var badge = tile.querySelector(".badge");
+                        badge.textContent =
+                            table.status.charAt(0).toUpperCase() + table.status.slice(1);
+                        badge.className =
+                            "badge rounded-pill align-self-start px-3 py-2 " +
+                            (table.status === "ordering"
+                                ? "badge-warn"
+                                : table.status === "eating"
+                                  ? "badge-ok"
+                                  : "bg-white text-dark");
+                        tile.setAttribute(
+                            "aria-label",
+                            "Table " + table.number + ", " + table.status + ", " + table.guests + " guests",
+                        );
+                    });
+                    await loadReadyOrders();
+                } catch (error) {
+                    var feedback = document.getElementById("table-feedback");
+                    feedback.textContent = error.message;
+                    feedback.className = "alert alert-danger";
+                }
+            }
+
+            async function loadReadyOrders() {
+                var response = await fetch("../api/orders.php?status=ready");
+                var result = await response.json();
+                if (!response.ok) {
+                    throw new Error(result.error || "Could not load ready orders.");
+                }
+
+                var container = document.getElementById("ready-orders");
+                container.textContent = "";
+                document.getElementById("ready-empty").classList.toggle("d-none", result.orders.length > 0);
+                result.orders.forEach(function (order) {
+                    var column = document.createElement("div");
+                    column.className = "col-12 col-md-6 col-lg-4";
+                    var card = document.createElement("article");
+                    card.className = "card p-3 h-100";
+                    var title = document.createElement("b");
+                    title.className = "fs-5";
+                    title.textContent = "Table " + order.tableNumber + " · Order #" + order.id;
+                    card.appendChild(title);
+                    var items = document.createElement("p");
+                    items.className = "my-2";
+                    items.textContent = order.items
+                        .map(function (item) {
+                            return item.quantity + "× " + item.name;
+                        })
+                        .join(", ");
+                    card.appendChild(items);
+                    var served = document.createElement("button");
+                    served.type = "button";
+                    served.className = "btn btn-primary w-100 mt-auto";
+                    served.textContent = "Mark served";
+                    served.addEventListener("click", async function () {
+                        served.disabled = true;
+                        try {
+                            var updateResponse = await fetch("../api/orders/status.php", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "X-CSRF-Token": csrfToken,
+                                },
+                                body: JSON.stringify({ orderId: order.id, action: "served" }),
+                            });
+                            var update = await updateResponse.json();
+                            if (!updateResponse.ok) {
+                                throw new Error(update.error || "Order could not be marked served.");
+                            }
+                            await loadTables();
+                        } catch (error) {
+                            var feedback = document.getElementById("table-feedback");
+                            feedback.textContent = error.message;
+                            feedback.className = "alert alert-danger";
+                            served.disabled = false;
+                        }
+                    });
+                    card.appendChild(served);
+                    column.appendChild(card);
+                    container.appendChild(column);
+                });
+            }
+
+            document.getElementById("sign-out").addEventListener("click", async function (event) {
+                event.preventDefault();
+                try {
+                    var response = await fetch("../api/auth/logout.php", {
+                        method: "POST",
+                        headers: { "X-CSRF-Token": csrfToken },
+                    });
+                    if (!response.ok) {
+                        throw new Error("Sign out failed. Refresh and try again.");
+                    }
+                    window.location.href = "login.html";
+                } catch (error) {
+                    var feedback = document.getElementById("table-feedback");
+                    feedback.textContent = error.message;
+                    feedback.className = "alert alert-danger";
+                }
+            });
+
+            loadTables();
+        </script>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
