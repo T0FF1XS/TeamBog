@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Table 6 | Lanay</title>
+        <title>Table | Lanay</title>
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Great+Vibes&display=swap"
@@ -52,12 +52,13 @@
         <main class="container position-relative pt-4 pb-5 mb-5">
             <header class="d-flex flex-wrap align-items-center gap-3 mb-4">
                 <img class="logo" src="../assets/images/logo.png" alt="Lanay Restaurant" />
-                <h1 class="page-title m-0">Table 6</h1>
+                <h1 class="page-title m-0" id="table-title">Table</h1>
                 <span
+                    id="staff-name"
                     class="badge rounded-pill bg-white text-dark fs-6 fw-semibold ms-auto px-3 py-2"
                     >Waiter 1</span
                 >
-                <a class="btn btn-outline-dark btn-sm" href="login.html">Sign out</a>
+                <a class="btn btn-outline-dark btn-sm" href="login.html" id="sign-out">Sign out</a>
             </header>
 
             <div class="row g-4">
@@ -114,7 +115,7 @@
                         </button>
                     </div>
 
-                    <div class="row g-3">
+                    <div class="row g-3" id="menu-grid">
                         <div class="col-6 col-md-4 col-xl-3 menu-col" data-cat="1">
                             <button
                                 type="button"
@@ -268,10 +269,17 @@
 
                 <div class="col-lg-5 col-xl-4">
                     <div class="card p-3">
-                        <form method="get" action="tables.html" id="order-form">
-                            <input type="hidden" name="table_no" value="6" />
+                        <form id="order-form" onsubmit="submitOrder(event)">
+                            <input type="hidden" name="table_no" class="table-no" value="" />
                             <input type="hidden" name="cart" id="cart-input" />
                             <input type="hidden" name="guests" id="guests-input" value="2" />
+
+                            <div
+                                class="alert d-none"
+                                id="order-feedback"
+                                role="status"
+                                aria-live="polite"
+                            ></div>
 
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <b class="fs-5">Guests</b>
@@ -357,7 +365,7 @@
                                 <b class="fs-4" id="total">₱0.00</b>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-lg w-100 mb-2">
+                            <button type="submit" id="send-btn" class="btn btn-primary btn-lg w-100 mb-2" disabled>
                                 Send to kitchen
                             </button>
                             <a class="btn btn-outline-dark w-100" href="tables.html"
@@ -365,21 +373,6 @@
                             >
                         </form>
 
-                        <form
-                            method="get"
-                            action="tables.html"
-                            class="mt-3"
-                            onsubmit="
-                                return confirm(
-                                    'Clear this table? Open orders will be marked as paid.',
-                                );
-                            "
-                        >
-                            <input type="hidden" name="table_no" value="6" />
-                            <button type="submit" class="btn btn-outline-dark btn-sm w-100">
-                                Clear this table
-                            </button>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -387,6 +380,153 @@
             <script>
                 var cart = [];
                 var guests = 2;
+                var maxGuests = 99;
+                var csrfToken = "";
+                var submitting = false;
+
+                var tableNo = parseInt(new URLSearchParams(window.location.search).get("table_no"), 10);
+                if (!(tableNo >= 1 && tableNo <= 99)) {
+                    window.location.replace("tables.html");
+                }
+                document.getElementById("table-title").textContent = "Table " + tableNo;
+                document.title = "Table " + tableNo + " | Lanay";
+                document.querySelectorAll(".table-no").forEach(function (el) {
+                    el.value = tableNo;
+                });
+
+                function renderMenu(items) {
+                    var grid = document.getElementById("menu-grid");
+                    grid.textContent = "";
+                    var colors = {
+                        1: "#fbdccf",
+                        2: "#fbefc0",
+                        3: "#f8e7a6",
+                        4: "#fbdccf",
+                        5: "#cfe3d3",
+                        6: "#cfe3d3",
+                    };
+                    var symbols = {
+                        1: "#nigiri",
+                        2: "#bowl",
+                        3: "#plate",
+                        4: "#bowl",
+                        5: "#plate",
+                        6: "#cup",
+                    };
+
+                    items.forEach(function (item) {
+                        var column = document.createElement("div");
+                        column.className = "col-6 col-md-4 col-xl-3 menu-col";
+                        column.dataset.cat = item.categoryId;
+                        var button = document.createElement("button");
+                        button.type = "button";
+                        button.className = "item";
+                        button.id = "item-" + item.id;
+                        button.dataset.name = item.name;
+                        button.dataset.price = item.price;
+                        button.disabled = !item.available;
+                        button.addEventListener("click", function () {
+                            addToCart(item.id);
+                        });
+
+                        var badge = document.createElement("span");
+                        badge.className = "qty-badge";
+                        badge.id = "badge-" + item.id;
+                        button.appendChild(badge);
+
+                        var art = document.createElement("div");
+                        art.className = "art";
+                        art.style.background = colors[item.categoryId] || "#f8e7a6";
+                        var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                        svg.setAttribute("width", "56");
+                        svg.setAttribute("height", "56");
+                        svg.setAttribute("viewBox", "0 0 64 64");
+                        svg.setAttribute("aria-hidden", "true");
+                        var use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+                        use.setAttribute("href", symbols[item.categoryId] || "#plate");
+                        svg.appendChild(use);
+                        art.appendChild(svg);
+                        button.appendChild(art);
+
+                        var name = document.createElement("b");
+                        name.textContent = item.name;
+                        button.appendChild(name);
+                        var price = document.createElement("span");
+                        price.textContent = item.available
+                            ? money(Number(item.price))
+                            : "Sold out";
+                        if (!item.available) {
+                            price.className =
+                                "badge rounded-pill badge-late align-self-start px-3 py-2";
+                        }
+                        button.appendChild(price);
+                        column.appendChild(button);
+                        grid.appendChild(column);
+                    });
+
+                    if (items.length === 0) {
+                        var empty = document.createElement("p");
+                        empty.className = "text-secondary";
+                        empty.textContent = "No active menu items.";
+                        grid.appendChild(empty);
+                    }
+                }
+
+                async function loadBackendData() {
+                    var itemButtons = document.querySelectorAll(".item");
+                    for (var i = 0; i < itemButtons.length; i++) {
+                        itemButtons[i].disabled = true;
+                    }
+
+                    try {
+                        var sessionResponse = await fetch("../api/auth/session.php");
+                        if (sessionResponse.status === 401) {
+                            window.location.replace("login.html");
+                            return;
+                        }
+                        var session = await sessionResponse.json();
+                        if (!sessionResponse.ok) {
+                            throw new Error(session.error || "Could not verify your session.");
+                        }
+                        if (session.staff.role !== "waiter" && session.staff.role !== "owner") {
+                            throw new Error("Your role cannot create orders.");
+                        }
+                        csrfToken = session.csrfToken;
+                        document.getElementById("staff-name").textContent = session.staff.name;
+
+                        var tablesResponse = await fetch("../api/tables.php");
+                        var tables = await tablesResponse.json();
+                        if (!tablesResponse.ok) {
+                            throw new Error(tables.error || "Could not load table details.");
+                        }
+                        var table = tables.tables.find(function (entry) {
+                            return entry.number === tableNo;
+                        });
+                        if (!table) {
+                            throw new Error("Table was not found.");
+                        }
+                        maxGuests = table.seats;
+                        guests = Math.min(guests, maxGuests);
+                        document.getElementById("guests").textContent = guests;
+                        document.getElementById("guests-input").value = guests;
+                        updateGuestButtons();
+
+                        var menuResponse = await fetch("../api/menu.php");
+                        var menu = await menuResponse.json();
+                        if (!menuResponse.ok) {
+                            throw new Error(menu.error || "Could not load the menu.");
+                        }
+                        renderMenu(menu.items);
+                    } catch (error) {
+                        showFeedback(error.message, false);
+                    }
+                }
+
+                function showFeedback(message, success) {
+                    var feedback = document.getElementById("order-feedback");
+                    feedback.textContent = message;
+                    feedback.className = "alert " + (success ? "alert-success" : "alert-danger");
+                }
 
                 function showCategory(id, button) {
                     var buttons = document.querySelectorAll("#cats .cat");
@@ -436,16 +576,22 @@
                 }
 
                 function changeGuests(amount) {
-                    guests = Math.max(1, guests + amount);
+                    guests = Math.min(maxGuests, Math.max(1, guests + amount));
                     document.getElementById("guests").textContent = guests;
                     document.getElementById("guests-input").value = guests;
+                    updateGuestButtons();
+                }
+
+                function updateGuestButtons() {
+                    document.querySelector('[aria-label="Fewer guests"]').disabled = guests <= 1;
+                    document.querySelector('[aria-label="More guests"]').disabled = guests >= maxGuests;
                 }
 
                 function buildNote() {
                     var parts = [];
                     var chosen = document.querySelectorAll(".note.active");
                     for (var i = 0; i < chosen.length; i++) {
-                        parts.push(chosen[i].textContent);
+                        parts.push(chosen[i].textContent.trim());
                     }
                     var extra = document.getElementById("note-extra").value.trim();
                     if (extra) {
@@ -519,9 +665,73 @@
 
                     document.getElementById("total").textContent = money(total);
                     document.getElementById("cart-input").value = JSON.stringify(cart);
+                    document.getElementById("send-btn").disabled = cart.length === 0;
                 }
 
+                async function submitOrder(event) {
+                    event.preventDefault();
+                    if (submitting || cart.length === 0) {
+                        return;
+                    }
+
+                    submitting = true;
+                    var sendButton = document.getElementById("send-btn");
+                    sendButton.disabled = true;
+                    try {
+                        var response = await fetch("../api/orders.php", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRF-Token": csrfToken,
+                            },
+                            body: JSON.stringify({
+                                tableNumber: tableNo,
+                                guestCount: guests,
+                                note: document.getElementById("note").value,
+                                items: cart.map(function (item) {
+                                    return { itemId: item.item_id, quantity: item.quantity };
+                                }),
+                            }),
+                        });
+                        var result = await response.json();
+                        if (!response.ok) {
+                            throw new Error(result.error || "Order could not be saved.");
+                        }
+                        cart = [];
+                        showCart();
+                        document.querySelectorAll(".note.active").forEach(function (note) {
+                            note.classList.remove("active");
+                        });
+                        document.getElementById("note-extra").value = "";
+                        buildNote();
+                        showFeedback("Order #" + result.id + " sent to the kitchen.", true);
+                        await loadBackendData();
+                    } catch (error) {
+                        showFeedback(error.message, false);
+                    } finally {
+                        submitting = false;
+                        sendButton.disabled = cart.length === 0;
+                    }
+                }
+
+                document.getElementById("sign-out").addEventListener("click", async function (event) {
+                    event.preventDefault();
+                    try {
+                        var response = await fetch("../api/auth/logout.php", {
+                            method: "POST",
+                            headers: { "X-CSRF-Token": csrfToken },
+                        });
+                        if (!response.ok) {
+                            throw new Error("Sign out failed. Refresh and try again.");
+                        }
+                        window.location.href = "login.html";
+                    } catch (error) {
+                        showFeedback(error.message, false);
+                    }
+                });
+
                 showCart();
+                loadBackendData();
             </script>
         </main>
 

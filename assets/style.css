@@ -423,10 +423,41 @@ h4 {
     .bgart .ring {
         display: none;
     }
+    .tabs {
+        width: calc(100% - 16px);
+        bottom: calc(8px + env(safe-area-inset-bottom));
+        gap: 4px;
+        padding: 6px;
+    }
+    .tab {
+        min-height: 48px;
+        font-size: 0.875rem;
+    }
 }
 @media (prefers-reduced-motion: reduce) {
     * {
         transition: none !important;
         animation: none !important;
+    }
+}
+
+:focus-visible {
+    outline: 3px solid #587b60;
+    outline-offset: 3px;
+}
+
+.role-card,
+.tile,
+.item {
+    transition:
+        transform 160ms ease,
+        box-shadow 160ms ease;
+}
+
+@media (hover: hover) {
+    .role-card:hover,
+    .tile:hover,
+    .item:not(:disabled):hover {
+        transform: translateY(-2px);
     }
 }

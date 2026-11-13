@@ -9,155 +9,213 @@
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Great+Vibes&display=swap"
         />
         <link rel="stylesheet" href="../assets/staff.css" />
+        <style>
+            .receipt {
+                max-width: 420px;
+                margin: 0 auto;
+                padding: 26px;
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 14px 34px rgba(27, 29, 31, 0.12);
+            }
+            .receipt-line {
+                display: flex;
+                justify-content: space-between;
+                gap: 16px;
+                padding: 8px 0;
+            }
+            .receipt-divider {
+                border-top: 2px dashed #dad8d1;
+                margin: 14px 0;
+            }
+            .receipt-actions {
+                display: flex;
+                gap: 12px;
+                justify-content: center;
+                margin-top: 18px;
+            }
+            .status-message {
+                margin: 12px auto;
+                max-width: 420px;
+                padding: 12px 14px;
+                border-radius: 14px;
+                background: #fbe5df;
+                color: #7a2a10;
+            }
+            .status-message:empty {
+                display: none;
+            }
+            @media print {
+                body,
+                .pg {
+                    padding: 0;
+                    background: #fff;
+                }
+                .bgart,
+                .bar,
+                .tabs,
+                .receipt-actions,
+                .status-message {
+                    display: none !important;
+                }
+                .receipt {
+                    box-shadow: none;
+                    max-width: none;
+                    width: 80mm;
+                    margin: 0;
+                    padding: 4mm;
+                }
+            }
+        </style>
     </head>
     <body>
-        <div class="pg" style="min-height: 960px">
+        <div class="pg">
             <div class="bgart" aria-hidden="true">
-                <span class="b2"></span><span class="b3"></span><span class="ring"></span
-                ><span class="wave"></span
-                ><img class="wm" src="../../assets/images/logo.png" alt="" aria-hidden="true" />
+                <span class="b2"></span><span class="b3"></span><span class="ring"></span>
             </div>
-            <div class="wr">
-                <div class="bar">
-                    <img
-                        class="lg"
-                        src="../../assets/images/logo.png"
-                        alt="Lanay Restaurant"
-                        style="width: 56px; height: 56px"
-                    />
+            <main class="wr">
+                <header class="bar">
                     <h1 class="h1">Receipt</h1>
-                    <span class="chip" style="background: #fff; margin-left: auto">Cashier</span
-                    ><b>6:42 PM</b>
-                </div>
-                <div
-                    style="
-                        display: flex;
-                        flex-wrap: wrap;
-                        gap: 30px;
-                        align-items: flex-start;
-                        justify-content: center;
-                    "
-                >
-                    <div
-                        style="
-                            width: 360px;
-                            background: #fff;
-                            padding: 26px 24px;
-                            box-shadow: 0 14px 34px rgba(27, 29, 31, 0.12);
-                            font-family: &quot;Poppins&quot;, sans-serif;
-                            border-radius: 6px 6px 0 0;
-                        "
+                    <span id="cashier-name" class="chip" style="background: #fff; margin-left: auto"
+                        >Cashier</span
                     >
-                        <div style="text-align: center">
-                            <img
-                                class="lg"
-                                src="../../assets/images/logo.png"
-                                alt=""
-                                style="
-                                    width: 96px;
-                                    height: 96px;
-                                    margin: 0 auto 6px;
-                                    display: block;
-                                "
-                            /><b style="font-size: 18px">Lanay Restaurant</b>
-                            <div style="font-size: 13px; color: #5b5f63">By: Little Sushi Bar</div>
-                        </div>
-                        <div style="border-top: 2px dashed #dad8d1; margin: 16px 0"></div>
-                        <div class="ln" style="font-size: 15px">
-                            <span>Order</span><span>0042</span>
-                        </div>
-                        <div class="ln" style="font-size: 15px">
-                            <span>Table</span><span>6</span>
-                        </div>
-                        <div class="ln" style="font-size: 15px">
-                            <span>Date</span><span>Nov 3, 6:48 PM</span>
-                        </div>
-                        <div class="ln" style="font-size: 15px">
-                            <span>Cashier</span><span>Cashier 1</span>
-                        </div>
-                        <div style="border-top: 2px dashed #dad8d1; margin: 16px 0"></div>
-                        <div class="ln" style="font-size: 15px">
-                            <span>2× Salmon nigiri</span><span>₱240.00</span>
-                        </div>
-                        <div class="ln" style="font-size: 15px">
-                            <span>1× California maki</span><span>₱180.00</span>
-                        </div>
-                        <div class="ln" style="font-size: 15px">
-                            <span>1× Chicken katsu curry</span><span>₱210.00</span>
-                        </div>
-                        <div style="border-top: 2px dashed #dad8d1; margin: 16px 0"></div>
-                        <div class="ln" style="font-size: 15px">
-                            <span>Subtotal</span><span>₱630.00</span>
-                        </div>
-                        <div class="ln" style="font-size: 15px">
-                            <span>Discount</span><span>₱0.00</span>
-                        </div>
-                        <div class="ln" style="font-size: 15px; font-size: 19px; font-weight: 700">
-                            <span>Total</span><span>₱630.00</span>
-                        </div>
-                        <div class="ln" style="font-size: 15px">
-                            <span>Cash</span><span>₱1,000.00</span>
-                        </div>
-                        <div class="ln" style="font-size: 15px">
-                            <span>Change</span><span>₱370.00</span>
-                        </div>
-                        <div style="border-top: 2px dashed #dad8d1; margin: 16px 0"></div>
-                        <div style="font-size: 13px; color: #5b5f63">
-                            Senior/PWD name: ____________<br />ID number: ____________
-                        </div>
-                        <p style="text-align: center; margin: 18px 0 0; font-weight: 600">
-                            Thank you for dining with us!
-                        </p>
-                        <p
-                            style="
-                                text-align: center;
-                                margin: 4px 0 0;
-                                font-size: 12px;
-                                color: #5b5f63;
-                            "
-                        >
-                            Sample layout
-                        </p>
+                </header>
+                <p id="receipt-feedback" class="status-message" role="status" aria-live="polite"></p>
+                <article id="receipt" class="receipt" aria-label="Payment receipt">
+                    <div style="text-align: center">
+                        <img
+                            src="../../assets/images/logo.png"
+                            alt="Lanay Restaurant"
+                            style="width: 72px; height: 72px; object-fit: contain"
+                        />
+                        <h2 style="margin: 4px 0">Lanay Restaurant</h2>
+                        <p style="margin: 0; color: #5b5f63">Payment receipt</p>
                     </div>
-                    <aside
-                        class="card"
-                        style="flex: 0 1 320px; display: flex; flex-direction: column; gap: 12px"
-                    >
-                        <p class="h2" style="margin: 0">Receipt</p>
-                        <button
-                            class="btn pri"
-                            style="
-                                min-height: 48px;
-                                font-size: 15px;
-                                padding: 0 18px;
-                                min-height: 58px;
-                            "
-                        >
-                            Print receipt</button
-                        ><button
-                            class="btn sec"
-                            style="
-                                min-height: 48px;
-                                font-size: 15px;
-                                padding: 0 18px;
-                                min-height: 58px;
-                            "
-                        >
-                            Reprint</button
-                        ><button
-                            class="btn sec"
-                            style="
-                                min-height: 48px;
-                                font-size: 15px;
-                                padding: 0 18px;
-                                min-height: 58px;
-                            "
-                        >
-                            Back to tables
-                        </button>
-                    </aside>
+                    <div class="receipt-divider"></div>
+                    <div id="receipt-meta"></div>
+                    <div class="receipt-divider"></div>
+                    <div id="receipt-items"></div>
+                    <div class="receipt-divider"></div>
+                    <div class="receipt-line"><strong>Total</strong><strong id="receipt-total"></strong></div>
+                    <div class="receipt-line"><span>Method</span><span id="receipt-method"></span></div>
+                    <div class="receipt-line"><span>Received</span><span id="receipt-received"></span></div>
+                    <div class="receipt-line"><span>Change</span><span id="receipt-change"></span></div>
+                    <div id="receipt-reference-row" class="receipt-line" hidden>
+                        <span>Reference</span><span id="receipt-reference"></span>
+                    </div>
+                    <div class="receipt-divider"></div>
+                    <p style="text-align: center; margin: 0">Thank you for dining with us!</p>
+                </article>
+                <div class="receipt-actions">
+                    <button id="print-receipt" class="btn pri" type="button">Print receipt</button>
+                    <a class="btn sec" href="orders.html">Back to orders</a>
                 </div>
-            </div>
+                <nav class="tabs" aria-label="Cashier navigation">
+                    <a class="tab" href="orders.html">Orders</a>
+                    <a class="tab" href="billing.html">Billing</a>
+                    <a class="tab on" href="receipt.html" aria-current="page">Receipt</a>
+                </nav>
+            </main>
         </div>
+        <script>
+            var orderId = Number(new URLSearchParams(window.location.search).get("orderId"));
+
+            function money(value) {
+                return "₱" + Number(value).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                });
+            }
+
+            function paymentMethodLabel(method) {
+                var labels = { cash: "Cash", gcash: "GCash", card: "Card" };
+                return labels[method] || method;
+            }
+
+            async function readJson(response, message) {
+                var result;
+                try {
+                    result = await response.json();
+                } catch (error) {
+                    throw new Error(message);
+                }
+                if (!response.ok) {
+                    throw new Error(result.error || message);
+                }
+                return result;
+            }
+
+            async function loadReceipt() {
+                var feedback = document.getElementById("receipt-feedback");
+                try {
+                    if (!Number.isInteger(orderId) || orderId < 1) {
+                        throw new Error("Open a receipt from a paid order.");
+                    }
+                    var session = await readJson(
+                        await fetch("../../api/auth/session.php"),
+                        "Could not verify the staff session.",
+                    );
+                    if (!["cashier", "owner"].includes(session.staff.role)) {
+                        throw new Error("Only a cashier or owner can view receipts.");
+                    }
+                    document.getElementById("cashier-name").textContent = session.staff.name;
+                    var payment = await readJson(
+                        await fetch("../../api/payments.php?orderId=" + encodeURIComponent(orderId)),
+                        "Could not load the receipt.",
+                    );
+                    if (payment.orderStatus !== "paid") {
+                        throw new Error("This order has not been paid.");
+                    }
+                    document.getElementById("receipt-meta").textContent = "";
+                    [
+                        ["Order", "#" + String(payment.orderId).padStart(4, "0")],
+                        ["Table", "Table " + payment.tableNumber],
+                        ["Guests", String(payment.guests)],
+                        ["Date", new Date(String(payment.createdAt).replace(" ", "T")).toLocaleString()],
+                        ["Cashier", payment.cashier || "Staff account deactivated"],
+                    ].forEach(function (entry) {
+                        var line = document.createElement("div");
+                        line.className = "receipt-line";
+                        var label = document.createElement("span");
+                        label.textContent = entry[0];
+                        var value = document.createElement("span");
+                        value.textContent = entry[1];
+                        line.appendChild(label);
+                        line.appendChild(value);
+                        document.getElementById("receipt-meta").appendChild(line);
+                    });
+                    var itemList = document.getElementById("receipt-items");
+                    itemList.textContent = "";
+                    payment.items.forEach(function (item) {
+                        var line = document.createElement("div");
+                        line.className = "receipt-line";
+                        var label = document.createElement("span");
+                        label.textContent = item.quantity + "× " + item.name;
+                        var value = document.createElement("span");
+                        value.textContent = money(Number(item.price) * item.quantity);
+                        line.appendChild(label);
+                        line.appendChild(value);
+                        itemList.appendChild(line);
+                    });
+                    document.getElementById("receipt-total").textContent = money(payment.amount);
+                    document.getElementById("receipt-method").textContent =
+                        paymentMethodLabel(payment.method);
+                    document.getElementById("receipt-received").textContent =
+                        money(payment.amountReceived);
+                    document.getElementById("receipt-change").textContent = money(payment.change);
+                    if (payment.reference) {
+                        document.getElementById("receipt-reference").textContent = payment.reference;
+                        document.getElementById("receipt-reference-row").hidden = false;
+                    }
+                } catch (error) {
+                    feedback.textContent = error.message;
+                }
+            }
+
+            document.getElementById("print-receipt").addEventListener("click", function () {
+                window.print();
+            });
+            loadReceipt();
+        </script>
     </body>
 </html>

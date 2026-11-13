@@ -47,14 +47,8 @@
                         ><span style="font-size: 13px">from 18 reviews</span>
                     </div>
                 </div>
-                <div
-                    style="
-                        display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                        gap: 18px;
-                    "
-                >
-                    <div class="card" style="grid-column: span 2">
+                <div class="reports-grid">
+                    <div class="card reports-wide">
                         <p class="h2">Sales this week</p>
                         <svg
                             viewBox="0 0 600 214"
@@ -287,7 +281,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card" style="grid-column: span 2">
+                    <div class="card reports-wide">
                         <div class="r" style="justify-content: space-between; margin-bottom: 6px">
                             <p class="h2" style="margin: 0">Discount logbook</p>
                             <button
@@ -302,45 +296,47 @@
                                 Export
                             </button>
                         </div>
-                        <table class="tbl">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Order</th>
-                                    <th>Type</th>
-                                    <th>Name</th>
-                                    <th>ID number</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Nov 3</td>
-                                    <td>0041</td>
-                                    <td>
-                                        <span
-                                            class="chip"
-                                            style="background: #eceae4; color: #1b1d1f"
-                                            >Senior</span
-                                        >
-                                    </td>
-                                    <td>Name from order</td>
-                                    <td>On file</td>
-                                </tr>
-                                <tr>
-                                    <td>Nov 3</td>
-                                    <td>0039</td>
-                                    <td>
-                                        <span
-                                            class="chip"
-                                            style="background: #eceae4; color: #1b1d1f"
-                                            >PWD</span
-                                        >
-                                    </td>
-                                    <td>Name from order</td>
-                                    <td>On file</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-scroll">
+                                <table class="tbl">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Order</th>
+                                            <th>Type</th>
+                                            <th>Name</th>
+                                            <th>ID number</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Nov 3</td>
+                                            <td>0041</td>
+                                            <td>
+                                                <span
+                                                    class="chip"
+                                                    style="background: #eceae4; color: #1b1d1f"
+                                                    >Senior</span
+                                                >
+                                            </td>
+                                            <td>Name from order</td>
+                                            <td>On file</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nov 3</td>
+                                            <td>0039</td>
+                                            <td>
+                                                <span
+                                                    class="chip"
+                                                    style="background: #eceae4; color: #1b1d1f"
+                                                    >PWD</span
+                                                >
+                                            </td>
+                                            <td>Name from order</td>
+                                            <td>On file</td>
+                                        </tr>
+                                    </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <nav class="tabs">
@@ -373,7 +369,7 @@
                             <path d="M6 3h12v18l-3-2-3 2-3-2-3 2z" />
                             <path d="M9 8h6M9 12h6" /></svg
                         >Orders</a
-                    ><a class="tab" href="../owner/menu-manager.html"
+                    ><a class="tab" href="../../core/menu.html"
                         ><svg
                             width="22"
                             height="22"

@@ -54,26 +54,27 @@
                 <img class="logo" src="../assets/images/logo.png" alt="Lanay Restaurant" />
                 <h1 class="page-title m-0">Menu</h1>
                 <span
+                    id="staff-name"
                     class="badge rounded-pill bg-white text-dark fs-6 fw-semibold ms-auto px-3 py-2"
                     >Owner 1</span
                 >
-                <a class="btn btn-outline-dark btn-sm" href="login.html">Sign out</a>
+                <a class="btn btn-outline-dark btn-sm" href="login.html" id="sign-out">Sign out</a>
             </header>
 
             <div class="card mb-4">
-                <div class="card-header bg-transparent border-0 pt-3 fw-semibold fs-5">
+                <div class="card-header bg-transparent border-0 pt-3 fw-semibold fs-5" id="menu-form-title">
                     Add Item
                 </div>
                 <div class="card-body">
-                    <form method="get" action="menu.html" class="row g-3">
-                        <input type="hidden" name="item_id" value="" />
+                    <form id="menu-form" class="row g-3">
+                        <input type="hidden" name="item_id" id="f-item_id" value="" />
                         <div class="col-md-5">
-                            <label class="form-label">Name</label>
-                            <input name="item_name" class="form-control" required value="" />
+                            <label class="form-label" for="f-item_name">Name</label>
+                            <input name="item_name" id="f-item_name" class="form-control" required value="" />
                         </div>
                         <div class="col-md-3">
-                            <label class="form-label">Category</label>
-                            <select name="category_id" class="form-select" required>
+                            <label class="form-label" for="f-category_id">Category</label>
+                            <select name="category_id" id="f-category_id" class="form-select" required>
                                 <option value="1">Sushi</option>
                                 <option value="2">Japanese</option>
                                 <option value="3">Korean</option>
@@ -83,32 +84,42 @@
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <label class="form-label">Price</label>
+                            <label class="form-label" for="f-price">Price</label>
                             <input
                                 type="number"
                                 step="0.01"
                                 min="0.01"
-                                name="price"
+                                name="price" id="f-price"
                                 class="form-control"
                                 required
                                 value=""
                             />
                         </div>
                         <div class="col-md-2">
-                            <label class="form-label">Portions per day</label>
+                            <label class="form-label" for="f-portions_left">Portions per day</label>
                             <input
                                 type="number"
                                 min="0"
-                                name="portions_left"
+                                name="portions_left" id="f-portions_left"
                                 class="form-control"
                                 placeholder="No limit"
                                 value=""
                             />
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 d-flex flex-wrap align-items-center gap-3">
+                            <div class="form-check">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    id="f-available"
+                                    checked
+                                />
+                                <label class="form-check-label" for="f-available">Available</label>
+                            </div>
                             <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
+                    <div class="alert d-none mt-3 mb-0" id="menu-feedback" role="status" aria-live="polite"></div>
                 </div>
             </div>
 
@@ -125,7 +136,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="menu-items">
                             <tr class="">
                                 <td class="fw-semibold">California maki</td>
                                 <td>Sushi</td>
@@ -341,6 +352,206 @@
             </div>
         </main>
 
+        <script>
+            var csrfToken = "";
+            var menuForm = document.getElementById("menu-form");
+            var feedback = document.getElementById("menu-feedback");
+
+            function showMenuFeedback(message, success) {
+                feedback.textContent = message;
+                feedback.className =
+                    "alert mt-3 mb-0 " + (success ? "alert-success" : "alert-danger");
+            }
+
+            async function sendMenuAction(body) {
+                var response = await fetch("../api/menu.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-Token": csrfToken,
+                    },
+                    body: JSON.stringify(body),
+                });
+                var result = await response.json();
+                if (!response.ok) {
+                    throw new Error(result.error || "Menu update failed.");
+                }
+                return result;
+            }
+
+            function addCell(row, value, className) {
+                var cell = document.createElement("td");
+                if (className) {
+                    cell.className = className;
+                }
+                cell.textContent = value;
+                row.appendChild(cell);
+                return cell;
+            }
+
+            function renderMenu(items) {
+                var body = document.getElementById("menu-items");
+                body.textContent = "";
+                items.forEach(function (item) {
+                    var row = document.createElement("tr");
+                    if (!item.active) {
+                        row.className = "text-secondary";
+                    }
+                    addCell(row, item.name, "fw-semibold");
+                    addCell(row, item.category);
+                    addCell(row, "₱" + Number(item.price).toFixed(2));
+                    addCell(row, item.portionsLeft === null ? "No limit" : String(item.portionsLeft));
+
+                    var availabilityCell = document.createElement("td");
+                    var available = document.createElement("input");
+                    available.type = "checkbox";
+                    available.className = "form-check-input";
+                    available.checked = item.available;
+                    available.disabled = !item.active;
+                    available.setAttribute("role", "switch");
+                    available.setAttribute("aria-label", item.name + " available");
+                    available.addEventListener("change", async function () {
+                        available.disabled = true;
+                        try {
+                            await sendMenuAction({
+                                action: "availability",
+                                id: item.id,
+                                available: available.checked,
+                            });
+                            showMenuFeedback("Availability updated.", true);
+                        } catch (error) {
+                            available.checked = !available.checked;
+                            showMenuFeedback(error.message, false);
+                        } finally {
+                            available.disabled = !item.active;
+                        }
+                    });
+                    availabilityCell.appendChild(available);
+                    row.appendChild(availabilityCell);
+
+                    var actions = document.createElement("td");
+                    actions.className = "text-end";
+                    if (item.active) {
+                        var edit = document.createElement("button");
+                        edit.type = "button";
+                        edit.className = "btn btn-outline-dark btn-sm me-1";
+                        edit.textContent = "Edit";
+                        edit.addEventListener("click", function () {
+                            document.getElementById("f-item_id").value = item.id;
+                            document.getElementById("f-item_name").value = item.name;
+                            document.getElementById("f-category_id").value = item.categoryId;
+                            document.getElementById("f-price").value = item.price;
+                            document.getElementById("f-portions_left").value =
+                                item.portionsLeft === null ? "" : item.portionsLeft;
+                            document.getElementById("f-available").checked = item.available;
+                            document.querySelector("#menu-form button[type=submit]").textContent =
+                                "Update item";
+                            document.getElementById("menu-form-title").textContent = "Edit Item";
+                            document.getElementById("f-item_name").focus();
+                        });
+                        actions.appendChild(edit);
+
+                        var archive = document.createElement("button");
+                        archive.type = "button";
+                        archive.className = "btn btn-outline-dark btn-sm";
+                        archive.textContent = "Archive";
+                        archive.addEventListener("click", async function () {
+                            if (!window.confirm("Archive " + item.name + "?")) {
+                                return;
+                            }
+                            archive.disabled = true;
+                            try {
+                                await sendMenuAction({ action: "archive", id: item.id });
+                                if (await loadMenu()) {
+                                    showMenuFeedback("Menu item archived.", true);
+                                }
+                            } catch (error) {
+                                archive.disabled = false;
+                                showMenuFeedback(error.message, false);
+                            }
+                        });
+                        actions.appendChild(archive);
+                    } else {
+                        actions.textContent = "Archived";
+                    }
+                    row.appendChild(actions);
+                    body.appendChild(row);
+                });
+            }
+
+            async function loadMenu() {
+                try {
+                    var sessionResponse = await fetch("../api/auth/session.php");
+                    if (sessionResponse.status === 401) {
+                        window.location.replace("login.html");
+                        return;
+                    }
+                    var session = await sessionResponse.json();
+                    if (!sessionResponse.ok) {
+                        throw new Error(session.error || "Could not verify your session.");
+                    }
+                    if (session.staff.role !== "owner") {
+                        throw new Error("Only an owner can manage the menu.");
+                    }
+                    csrfToken = session.csrfToken;
+                    document.getElementById("staff-name").textContent = session.staff.name;
+
+                    var response = await fetch("../api/menu.php?archived=1");
+                    var result = await response.json();
+                    if (!response.ok) {
+                        throw new Error(result.error || "Could not load the menu.");
+                    }
+                    renderMenu(result.items);
+                    return true;
+                } catch (error) {
+                    document.getElementById("menu-items").textContent = "";
+                    showMenuFeedback(error.message, false);
+                    return false;
+                }
+            }
+
+            menuForm.addEventListener("submit", async function (event) {
+                event.preventDefault();
+                var portionsValue = document.getElementById("f-portions_left").value;
+                try {
+                    await sendMenuAction({
+                        id: document.getElementById("f-item_id").value || null,
+                        name: document.getElementById("f-item_name").value.trim(),
+                        categoryId: Number(document.getElementById("f-category_id").value),
+                        price: document.getElementById("f-price").value,
+                        portionsLeft: portionsValue === "" ? null : Number(portionsValue),
+                        available: document.getElementById("f-available").checked,
+                    });
+                    menuForm.reset();
+                    document.getElementById("f-item_id").value = "";
+                    document.querySelector("#menu-form button[type=submit]").textContent = "Save";
+                    document.getElementById("menu-form-title").textContent = "Add Item";
+                    if (await loadMenu()) {
+                        showMenuFeedback("Menu item saved.", true);
+                    }
+                } catch (error) {
+                    showMenuFeedback(error.message, false);
+                }
+            });
+
+            document.getElementById("sign-out").addEventListener("click", async function (event) {
+                event.preventDefault();
+                try {
+                    var response = await fetch("../api/auth/logout.php", {
+                        method: "POST",
+                        headers: { "X-CSRF-Token": csrfToken },
+                    });
+                    if (!response.ok) {
+                        throw new Error("Sign out failed. Refresh and try again.");
+                    }
+                    window.location.href = "login.html";
+                } catch (error) {
+                    showMenuFeedback(error.message, false);
+                }
+            });
+
+            loadMenu();
+        </script>
         <nav class="tabs d-print-none">
             <a class="tab" href="tables.html">Tables</a>
             <a class="tab" href="kitchen.html">Kitchen</a>

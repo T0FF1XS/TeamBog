@@ -3,22 +3,93 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Lanay orders</title>
+        <title>Lanay cashier orders</title>
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Great+Vibes&display=swap"
         />
         <link rel="stylesheet" href="../assets/staff.css" />
+        <style>
+            .order-table-scroll {
+                max-width: 100%;
+                overflow-x: auto;
+            }
+            .order-table-scroll .tbl {
+                min-width: 760px;
+            }
+            .cashier-filters {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .cashier-filter {
+                min-height: 42px;
+                padding: 0 16px;
+                border: 2px solid #dad8d1;
+                border-radius: 99px;
+                background: #fff;
+                color: #1b1d1f;
+                font: inherit;
+                font-weight: 600;
+                cursor: pointer;
+            }
+            .cashier-filter[aria-pressed="true"] {
+                background: #1b1d1f;
+                color: #fff;
+                border-color: #1b1d1f;
+            }
+            .order-items {
+                max-width: 280px;
+            }
+            .status-message {
+                margin: 14px 0 0;
+                padding: 12px 14px;
+                border-radius: 14px;
+            }
+            .status-message:empty {
+                display: none;
+            }
+            .status-error {
+                background: #fbe5df;
+                color: #7a2a10;
+            }
+            .status-ok {
+                background: #e2eee4;
+                color: #2d5a3a;
+            }
+            .cashier-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .cashier-actions .btn {
+                min-height: 40px;
+                padding: 0 12px;
+                font-size: 14px;
+                white-space: nowrap;
+            }
+            .sr-only {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+        </style>
     </head>
     <body>
-        <div class="pg" style="min-height: 1000px">
+        <div class="pg">
             <div class="bgart" aria-hidden="true">
                 <span class="b2"></span><span class="b3"></span><span class="ring"></span
                 ><span class="wave"></span
                 ><img class="wm" src="../../assets/images/logo.png" alt="" aria-hidden="true" />
             </div>
-            <div class="wr">
-                <div class="bar">
+            <main class="wr">
+                <header class="bar">
                     <img
                         class="lg"
                         src="../../assets/images/logo.png"
@@ -26,323 +97,246 @@
                         style="width: 56px; height: 56px"
                     />
                     <h1 class="h1">Orders</h1>
-                    <span class="chip" style="background: #fff; margin-left: auto">Cashier</span
-                    ><b>6:42 PM</b>
-                </div>
-                <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
-                    <div class="card" style="flex: 1 1 640px; padding: 18px">
-                        <div class="r" style="flex-wrap: wrap; margin-bottom: 14px">
-                            <button
-                                class="cat on"
-                                style="
-                                    min-height: 44px;
-                                    padding: 0 18px;
-                                    border-radius: 99px;
-                                    border: 2px solid #dad8d1;
-                                    background: #1b1d1f;
-                                    color: #fff;
-                                    font-family: inherit;
-                                    font-size: 15px;
-                                    font-weight: 500;
-                                "
-                            >
-                                Today</button
-                            ><button
-                                class="cat"
-                                style="
-                                    min-height: 44px;
-                                    padding: 0 18px;
-                                    border-radius: 99px;
-                                    border: 2px solid #dad8d1;
-                                    background: #fff;
-                                    color: #1b1d1f;
-                                    font-family: inherit;
-                                    font-size: 15px;
-                                    font-weight: 500;
-                                "
-                            >
-                                Dine-in</button
-                            ><button
-                                class="cat"
-                                style="
-                                    min-height: 44px;
-                                    padding: 0 18px;
-                                    border-radius: 99px;
-                                    border: 2px solid #dad8d1;
-                                    background: #fff;
-                                    color: #1b1d1f;
-                                    font-family: inherit;
-                                    font-size: 15px;
-                                    font-weight: 500;
-                                "
-                            >
-                                Takeout</button
-                            ><button
-                                class="cat"
-                                style="
-                                    min-height: 44px;
-                                    padding: 0 18px;
-                                    border-radius: 99px;
-                                    border: 2px solid #dad8d1;
-                                    background: #fff;
-                                    color: #1b1d1f;
-                                    font-family: inherit;
-                                    font-size: 15px;
-                                    font-weight: 500;
-                                "
-                            >
-                                Delivery</button
-                            ><button
-                                class="cat"
-                                style="
-                                    min-height: 44px;
-                                    padding: 0 18px;
-                                    border-radius: 99px;
-                                    border: 2px solid #dad8d1;
-                                    background: #fff;
-                                    color: #1b1d1f;
-                                    font-family: inherit;
-                                    font-size: 15px;
-                                    font-weight: 500;
-                                "
-                            >
-                                Voided</button
-                            ><input
-                                class="inp"
-                                placeholder="Search order number"
-                                aria-label="Search order number"
-                                style="
-                                    flex: 1;
-                                    min-width: 180px;
-                                    margin-left: auto;
-                                    max-width: 260px;
-                                "
-                            />
+                    <span id="cashier-name" class="chip" style="background: #fff; margin-left: auto"
+                        >Cashier</span
+                    >
+                    <button id="sign-out" class="btn sec" type="button" style="min-height: 44px">
+                        Sign out
+                    </button>
+                </header>
+                <section class="card" aria-labelledby="orders-title">
+                    <div class="r" style="justify-content: space-between; flex-wrap: wrap">
+                        <div>
+                            <h2 id="orders-title" class="h2" style="margin: 0">Order activity</h2>
+                            <p style="margin: 6px 0 0; color: #5b5f63">
+                                Only served orders can be paid.
+                            </p>
                         </div>
+                        <label class="sr-only" for="order-search">Search orders</label>
+                        <input
+                            id="order-search"
+                            class="inp"
+                            type="search"
+                            placeholder="Search order or table"
+                            style="max-width: 280px"
+                        />
+                    </div>
+                    <div class="cashier-filters" role="group" aria-label="Filter orders" style="margin: 16px 0">
+                        <button class="cashier-filter" type="button" data-filter="all" aria-pressed="true">
+                            All
+                        </button>
+                        <button class="cashier-filter" type="button" data-filter="served" aria-pressed="false">
+                            Awaiting payment
+                        </button>
+                        <button class="cashier-filter" type="button" data-filter="paid" aria-pressed="false">
+                            Paid
+                        </button>
+                        <button class="cashier-filter" type="button" data-filter="active" aria-pressed="false">
+                            In progress
+                        </button>
+                    </div>
+                    <div class="order-table-scroll">
                         <table class="tbl">
                             <thead>
                                 <tr>
                                     <th>Order</th>
-                                    <th>Where</th>
+                                    <th>Table</th>
                                     <th>Items</th>
                                     <th>Total</th>
-                                    <th>Time</th>
+                                    <th>Source</th>
                                     <th>Status</th>
-                                    <th></th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>0042</td>
-                                    <td>Table 6</td>
-                                    <td>4 items</td>
-                                    <td>₱630.00</td>
-                                    <td>6:38 PM</td>
-                                    <td>
-                                        <span
-                                            class="chip"
-                                            style="background: #f8e7a6; color: #5a4300"
-                                            >Open</span
-                                        >
-                                    </td>
-                                    <td>
-                                        <button
-                                            class="btn pri"
-                                            style="
-                                                min-height: 48px;
-                                                font-size: 15px;
-                                                padding: 0 18px;
-                                                min-height: 40px;
-                                            "
-                                        >
-                                            Bill
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>0041</td>
-                                    <td>Table 4</td>
-                                    <td>3 items</td>
-                                    <td>₱520.00</td>
-                                    <td>6:20 PM</td>
-                                    <td>
-                                        <span
-                                            class="chip"
-                                            style="background: #cfe3d3; color: #2d5a3a"
-                                            >Paid</span
-                                        >
-                                    </td>
-                                    <td>
-                                        <button
-                                            class="btn sec"
-                                            style="
-                                                min-height: 48px;
-                                                font-size: 15px;
-                                                padding: 0 18px;
-                                                min-height: 40px;
-                                            "
-                                        >
-                                            Reprint
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>0040</td>
-                                    <td>Delivery 14</td>
-                                    <td>3 items</td>
-                                    <td>₱400.00</td>
-                                    <td>6:05 PM</td>
-                                    <td>
-                                        <span
-                                            class="chip"
-                                            style="background: #f8e7a6; color: #5a4300"
-                                            >Out for delivery</span
-                                        >
-                                    </td>
-                                    <td>
-                                        <button
-                                            class="btn sec"
-                                            style="
-                                                min-height: 48px;
-                                                font-size: 15px;
-                                                padding: 0 18px;
-                                                min-height: 40px;
-                                            "
-                                        >
-                                            Reprint
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>0039</td>
-                                    <td>Table 1</td>
-                                    <td>3 items</td>
-                                    <td>₱380.00</td>
-                                    <td>5:52 PM</td>
-                                    <td>
-                                        <span
-                                            class="chip"
-                                            style="background: #cfe3d3; color: #2d5a3a"
-                                            >Paid</span
-                                        >
-                                    </td>
-                                    <td>
-                                        <button
-                                            class="btn sec"
-                                            style="
-                                                min-height: 48px;
-                                                font-size: 15px;
-                                                padding: 0 18px;
-                                                min-height: 40px;
-                                            "
-                                        >
-                                            Reprint
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>0038</td>
-                                    <td>Takeout</td>
-                                    <td>2 items</td>
-                                    <td>₱300.00</td>
-                                    <td>5:40 PM</td>
-                                    <td>
-                                        <span
-                                            class="chip"
-                                            style="background: #fbdccf; color: #7a2a10"
-                                            >Voided</span
-                                        >
-                                    </td>
-                                    <td>
-                                        <button
-                                            class="btn sec"
-                                            style="
-                                                min-height: 48px;
-                                                font-size: 15px;
-                                                padding: 0 18px;
-                                                min-height: 40px;
-                                            "
-                                        >
-                                            Details
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>0037</td>
-                                    <td>Table 9</td>
-                                    <td>4 items</td>
-                                    <td>₱710.00</td>
-                                    <td>5:31 PM</td>
-                                    <td>
-                                        <span
-                                            class="chip"
-                                            style="background: #cfe3d3; color: #2d5a3a"
-                                            >Paid</span
-                                        >
-                                    </td>
-                                    <td>
-                                        <button
-                                            class="btn sec"
-                                            style="
-                                                min-height: 48px;
-                                                font-size: 15px;
-                                                padding: 0 18px;
-                                                min-height: 40px;
-                                            "
-                                        >
-                                            Reprint
-                                        </button>
-                                    </td>
-                                </tr>
+                            <tbody id="orders-list">
+                                <tr><td colspan="7">Loading orders…</td></tr>
                             </tbody>
                         </table>
                     </div>
-                    <aside class="card" style="flex: 0 1 360px; min-width: 300px">
-                        <p class="h2" style="margin: 0 0 4px">Void order 0042?</p>
-                        <p style="margin: 0; color: #5b5f63; font-size: 14px">
-                            Table 6, ₱630.00. A void needs the owner's PIN.
-                        </p>
-                        <b class="lbl">Reason</b>
-                        <div class="r" style="flex-wrap: wrap; gap: 8px">
-                            <button
-                                class="qn"
-                                style="background: #f8e7a6; border-color: #f8e7a6; font-weight: 600"
-                            >
-                                Wrong item</button
-                            ><button class="qn" style="">Customer left</button
-                            ><button class="qn" style="">Duplicate</button>
-                        </div>
-                        <label class="lbl" for="pn">Owner PIN</label
-                        ><input
-                            id="pn"
-                            class="inp"
-                            type="password"
-                            value="••••"
-                            style="letter-spacing: 6px"
-                        />
-                        <div class="r" style="margin-top: 18px">
-                            <button
-                                class="btn sec"
-                                style="min-height: 48px; font-size: 15px; padding: 0 18px; flex: 1"
-                            >
-                                Cancel</button
-                            ><button
-                                class="btn pri"
-                                style="min-height: 48px; font-size: 15px; padding: 0 18px; flex: 1"
-                            >
-                                Void order
-                            </button>
-                        </div>
-                    </aside>
-                </div>
+                    <p id="orders-feedback" class="status-message" role="status" aria-live="polite"></p>
+                </section>
                 <nav class="tabs" aria-label="Cashier navigation">
                     <a class="tab on" href="orders.html" aria-current="page">Orders</a>
                     <a class="tab" href="billing.html">Billing</a>
                     <a class="tab" href="receipt.html">Receipt</a>
-                    <a class="tab" href="senior-pwd.html">Senior/PWD</a>
-                    <a class="tab" href="close-shift.html">Close shift</a>
                 </nav>
-            </div>
+            </main>
         </div>
+        <script>
+            var csrfToken = "";
+            var allOrders = [];
+            var selectedFilter = "all";
+            var orderSearch = document.getElementById("order-search");
+            var orderList = document.getElementById("orders-list");
+            var feedback = document.getElementById("orders-feedback");
+
+            function showFeedback(message, success) {
+                feedback.textContent = message;
+                feedback.className = "status-message " + (success ? "status-ok" : "status-error");
+            }
+
+            function money(value) {
+                return "₱" + Number(value).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                });
+            }
+
+            function addCell(row, value, className) {
+                var cell = document.createElement("td");
+                cell.textContent = value;
+                if (className) {
+                    cell.className = className;
+                }
+                row.appendChild(cell);
+                return cell;
+            }
+
+            function orderMatches(order, search) {
+                if (!search) {
+                    return true;
+                }
+                return (
+                    String(order.id).includes(search) ||
+                    String(order.tableNumber).includes(search) ||
+                    order.items.some(function (item) {
+                        return item.name.toLowerCase().includes(search);
+                    })
+                );
+            }
+
+            function renderOrders() {
+                var search = orderSearch.value.trim().toLowerCase();
+                var visible = allOrders.filter(function (order) {
+                    var statusMatches =
+                        selectedFilter === "all" ||
+                        (selectedFilter === "active" &&
+                            ["new", "preparing", "ready"].includes(order.status)) ||
+                        order.status === selectedFilter;
+                    return statusMatches && orderMatches(order, search);
+                });
+                orderList.textContent = "";
+                if (visible.length === 0) {
+                    var emptyRow = document.createElement("tr");
+                    var emptyCell = addCell(emptyRow, "No matching orders.");
+                    emptyCell.colSpan = 7;
+                    orderList.appendChild(emptyRow);
+                    return;
+                }
+
+                visible.forEach(function (order) {
+                    var row = document.createElement("tr");
+                    addCell(row, "#" + String(order.id).padStart(4, "0"));
+                    addCell(row, "Table " + order.tableNumber);
+                    addCell(
+                        row,
+                        order.items
+                            .map(function (item) {
+                                return item.quantity + "× " + item.name;
+                            })
+                            .join(", "),
+                        "order-items",
+                    );
+                    addCell(row, money(order.total));
+                    addCell(row, order.source === "qr" ? "QR order" : "Staff order");
+
+                    var statusCell = addCell(row, "");
+                    var badge = document.createElement("span");
+                    badge.className = "chip " + (order.status === "paid" ? "account-active" : "");
+                    badge.textContent = order.status.charAt(0).toUpperCase() + order.status.slice(1);
+                    statusCell.appendChild(badge);
+
+                    var actionCell = document.createElement("td");
+                    var actions = document.createElement("div");
+                    actions.className = "cashier-actions";
+                    if (order.status === "served") {
+                        var pay = document.createElement("a");
+                        pay.className = "btn pri";
+                        pay.href = "billing.html?orderId=" + encodeURIComponent(order.id);
+                        pay.textContent = "Take payment";
+                        actions.appendChild(pay);
+                    } else if (order.status === "paid") {
+                        var receipt = document.createElement("a");
+                        receipt.className = "btn sec";
+                        receipt.href = "receipt.html?orderId=" + encodeURIComponent(order.id);
+                        receipt.textContent = "Receipt";
+                        actions.appendChild(receipt);
+                    } else {
+                        actions.textContent = "Not ready for payment";
+                    }
+                    actionCell.appendChild(actions);
+                    row.appendChild(actionCell);
+                    orderList.appendChild(row);
+                });
+            }
+
+            async function readJson(response, message) {
+                var result;
+                try {
+                    result = await response.json();
+                } catch (error) {
+                    throw new Error(message);
+                }
+                if (!response.ok) {
+                    throw new Error(result.error || message);
+                }
+                return result;
+            }
+
+            async function loadOrders() {
+                try {
+                    var sessionResponse = await fetch("../../api/auth/session.php");
+                    if (sessionResponse.status === 401) {
+                        window.location.replace("../../core/login.html");
+                        return;
+                    }
+                    var session = await readJson(sessionResponse, "Could not verify the staff session.");
+                    if (!["cashier", "owner"].includes(session.staff.role)) {
+                        throw new Error("Only a cashier or owner can view cashier orders.");
+                    }
+                    csrfToken = session.csrfToken;
+                    document.getElementById("cashier-name").textContent = session.staff.name;
+
+                    var response = await fetch("../../api/orders.php");
+                    var result = await readJson(response, "Could not load orders.");
+                    allOrders = result.orders;
+                    renderOrders();
+                } catch (error) {
+                    orderList.textContent = "";
+                    var errorRow = document.createElement("tr");
+                    var errorCell = addCell(errorRow, "Orders could not be loaded.");
+                    errorCell.colSpan = 7;
+                    orderList.appendChild(errorRow);
+                    showFeedback(error.message, false);
+                }
+            }
+
+            document.querySelectorAll("[data-filter]").forEach(function (button) {
+                button.addEventListener("click", function () {
+                    selectedFilter = button.getAttribute("data-filter");
+                    document.querySelectorAll("[data-filter]").forEach(function (filter) {
+                        filter.setAttribute(
+                            "aria-pressed",
+                            filter === button ? "true" : "false",
+                        );
+                    });
+                    renderOrders();
+                });
+            });
+            orderSearch.addEventListener("input", renderOrders);
+            document.getElementById("sign-out").addEventListener("click", async function () {
+                try {
+                    var response = await fetch("../../api/auth/logout.php", {
+                        method: "POST",
+                        headers: { "X-CSRF-Token": csrfToken },
+                    });
+                    await readJson(response, "Sign out failed.");
+                    window.location.replace("../../core/login.html");
+                } catch (error) {
+                    showFeedback(error.message, false);
+                }
+            });
+            loadOrders();
+        </script>
     </body>
 </html>
